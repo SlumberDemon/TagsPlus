@@ -10,6 +10,10 @@ class Tags(commands.Cog):
     async def tag(self, ctx):
         await ctx.send('Placeholder')
 
+    @tag.command(name='create')
+    async def create_tag(self, ctx):
+        await ctx.send('Placeholder')
+
 def setup(bot):
     bot.add_cog(Tags(bot))
     
