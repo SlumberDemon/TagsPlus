@@ -31,7 +31,7 @@ class Tags(commands.Cog):
     @tag.command(name='raw')
     async def raw_tag(self, ctx, tag):
         data = await guild_get_tag(guildId = ctx.guild.id, key=f'{tag}')
-        embed = discord.Embed(title=f'Results for [{tag}]', description=f'```py' f'\n{data}' f'\n```')
+        embed = discord.Embed(description=f'```py' f'\n{data}' f'\n```')
         await ctx.send(embed=embed)
 
 def setup(bot):
