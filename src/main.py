@@ -21,7 +21,17 @@ class Tags(commands.Bot):
         print(f'Logged in as {self.user} (ID: {self.user.id})')
         print('------')
 
+tags = Tags()
+
+# Cogs
+
+cogs = [
+    "tags"
+]
+
+for cog in cogs:
+    tags.load_extension("cogs." + cog)
+
 # Run
 
-tags = Tags()
 tags.run(getenv('TOKEN'))
