@@ -1,8 +1,6 @@
 import discord 
 from discord.ext import commands
 from src.extras.func import *
-from src.extras.func import guild_create_tag
-from src.extras.func import guild_get_tag
 
 class Tags(commands.Cog):
 
@@ -15,7 +13,7 @@ class Tags(commands.Cog):
 
     @tag.command(name='create')
     async def create_tag(self, ctx, name, * content):
-        await guild_create_tag(guildId=ctx.guild.id, item=[{"owner":ctx.author.id, "name":name, "content":content}], key=name)
+        await guild_create_tag(guildId=ctx.guild.id, item=[{"owner":ctx.author.id, "name":name, "content":f"{content}"}], key=name)
         await ctx.send(f'Created tag "{name}"')
 
     @tag.command(name='edit')
@@ -33,7 +31,7 @@ class Tags(commands.Cog):
     @tag.command(name='raw')
     async def raw_tag(self, ctx, tag):
         data = await guild_get_tag(guildId = ctx.guild.id, key=f'{tag}')
-        embed = discord.Embed(title=f'Results for [{data}]', description=f'```py' f'\n{data}' f'\n```')
+        embed = discord.Embed(title=f'Results for [{tag}]', description=f'```py' f'\n{data}' f'\n```')
         await ctx.send(embed=embed)
 
 def setup(bot):
