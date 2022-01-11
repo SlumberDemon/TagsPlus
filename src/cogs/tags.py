@@ -12,7 +12,7 @@ class Tags(commands.Cog):
         await ctx.send('Main')
 
     @tag.command(name='create')
-    async def create_tag(self, ctx, name, * content):
+    async def create_tag(self, ctx, name, content:str):
         await guild_create_tag(guildId=ctx.guild.id, item=[{"owner":ctx.author.id, "name":name, "content":f"{content}"}], key=name)
         await ctx.send(f'Created tag "{name}"')
 
