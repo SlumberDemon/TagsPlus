@@ -1,5 +1,7 @@
 import discord 
 from discord.ext import commands
+from src.extras.func import *
+from src.extras.func import guild_create_tag
 
 class Tags(commands.Cog):
 
@@ -11,8 +13,9 @@ class Tags(commands.Cog):
         await ctx.send('Main')
 
     @tag.command(name='create')
-    async def create_tag(self, ctx):
-        await ctx.send('Main -> Create')
+    async def create_tag(self, ctx, name, * content):
+        await guild_create_tag(guildId=ctx.guild.id, item=[{"owner":ctx.author.id, "name":name, "content":content}], key=name)
+        await ctx.send(f'Created tag "{name}"')
 
     @tag.command(name='edit')
     async def edit_tag(self, ctx):
