@@ -14,7 +14,7 @@ class Tags(commands.Cog):
 
     @tag.command(name='create')
     async def create_tag(self, ctx, name, * content):
-        await guild_create_tag(guildId=ctx.guild.id, item=[{"owner":ctx.author.id, "name":name, "content":str(content)}], key=name)
+        await guild_create_tag(guildId=ctx.guild.id, item=[{"owner":ctx.author.id, "name":name, "content":content}], key=name)
         await ctx.send(f'Created tag "{name}"')
 
     @tag.command(name='edit')
@@ -24,6 +24,10 @@ class Tags(commands.Cog):
     @tag.command(name='delete')
     async def delete_tag(self, ctx):
         await ctx.send('Main -> Delete')
+
+    @tag.command(name='show')
+    async def show_tag(self, ctx):
+        await ctx.send('Main -> Show')
 
 def setup(bot):
     bot.add_cog(Tags(bot))
