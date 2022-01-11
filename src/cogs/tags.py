@@ -6,11 +6,11 @@ class Tags(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.group(name='tag', invoke_without_command=True)
+    @commands.group(name='tags', invoke_without_command=True)
     async def tag(self, ctx):
         await ctx.send('Placeholder')
 
-    @tag.command(name='create')
+    @tags.command(name='create')
     async def create_tag(self, ctx):
         await ctx.send('Placeholder')
 
