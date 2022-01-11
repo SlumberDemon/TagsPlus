@@ -14,7 +14,7 @@ class Tags(commands.Bot):
         super().__init__(
             command_prefix='+',
             intents=intent,
-            help_command=None
+            case_insensitive=True
         )
 
     async def on_ready(self):
