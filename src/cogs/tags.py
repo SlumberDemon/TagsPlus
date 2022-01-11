@@ -14,7 +14,7 @@ class Tags(commands.Cog):
     @tag.command(name='create')
     async def create_tag(self, ctx, name, *, content:str):
         await guild_create_tag(guildId=ctx.guild.id, item=[{"owner":ctx.author.id, "name":name, "content":content}], key=name)
-        await ctx.send(f'Created tag "{name}"')
+        await ctx.send(f'Tag {name} successfully created.')
 
     @tag.command(name='edit')
     async def edit_tag(self, ctx):
