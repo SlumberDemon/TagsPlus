@@ -4,7 +4,7 @@ from typing import Union
 
 deta = Deta(os.getenv('DETA'))
 
-async def guild_push_tag(guildId: int, item: Union[list, dict], key: str):
+async def guild_create_tag(guildId: int, item: Union[list, dict], key: str):
     db = deta.Base(f'Guild-{guildId}')
     db.insert({'item': item}, key)
 
