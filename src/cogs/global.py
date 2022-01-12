@@ -11,6 +11,7 @@ class AuxFunc:
     def __init__(self):
         self.deta = Deta(os.getenv('DETA'))
         self.db = self.deta.Base('_PUBLIC_TAGS')
+        self.cache = self.db.get('all')  # soon implement cache for more efficiency
 
     async def push_public_tag(self, item: Union[list, dict], key: str):
         return self.db.put({'item': item}, key)
