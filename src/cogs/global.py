@@ -43,7 +43,7 @@ class Global(commands.Cog):
         previous = await self.func.fetch_public_tag(key=name)
         if previous:
             await ctx.send('Merging with previous tags')
-            previous[f'{len(list(previous)) + 1}'] = {
+            previous[str(ctx.author.id)] = {
                 "owner": f'{ctx.author.id}',
                 "name": name,
                 "content": content,
@@ -54,7 +54,7 @@ class Global(commands.Cog):
         else:
             await ctx.send(f'Tag `{name}` successfully created.')
             item = {
-                '1':
+                str(ctx.author.id):
                     {
                         "owner": f'{ctx.author.id}',
                         "name": name,
