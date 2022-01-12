@@ -23,7 +23,7 @@ class AuxFunc:
             return None
 
 
-class TagsGL(commands.Cog):
+class Global(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
@@ -66,4 +66,4 @@ class TagsGL(commands.Cog):
 
 
 def setup(bot: discord.Client):
-    bot.add_cog(TagsGL(bot))
+    bot.add_cog(Global(bot))

@@ -3,7 +3,7 @@ from discord.ext import commands
 from src.extras.func import *
 from src.extras.views import *
 
-class Tags(commands.Cog):
+class Guild(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
@@ -21,7 +21,7 @@ class Tags(commands.Cog):
         try:
             time = datetime.datetime.now() 
             await guild_create_tag(guildId=ctx.guild.id, item=[{"owner":f'{ctx.author.id}', "name":name, "content":content, "created_at":f'{time.day}/{time.month}/{time.year}'}], key=name)
-            await ctx.send(f'Tag {name} successfully created.')
+            await ctx.send(f'Tag `{name}` successfully created.')
         except:
            await ctx.send('This tag already exists.')
 
@@ -33,7 +33,7 @@ class Tags(commands.Cog):
             owner = data['item'][0]['owner']
             if f'{ctx.author.id}' == f'{owner}':
                 await guild_edit_tag(guildId=ctx.guild.id, item=[{"owner":f'{ctx.author.id}', "name":tag, "content":content, "created_at":f'{time.day}/{time.month}/{time.year}'}], key=tag)
-                await ctx.send(f'Tag {tag} successfully edited.')
+                await ctx.send(f'Tag `{tag}` successfully edited.')
             else:
                 await ctx.send('You don\'t own this tag.', view=None)
         except:
@@ -46,14 +46,14 @@ class Tags(commands.Cog):
             data = await guild_get_tag(guildId=ctx.guild.id, key=tag)
             owner = data['item'][0]['owner']
             view = Confirm(ctx)
-            msg = await ctx.send(f'Want to delete {tag} tag?', view=view)
+            msg = await ctx.send(f'Want to delete `{tag}` tag?', view=view)
             await view.wait()
             if view.value is None:
-                await ctx.send('Tag deletion timed out.')
+                await msg.edit('Tag deletion timed out.')
             elif view.value:
                 if f'{ctx.author.id}' == f'{owner}':
                     await guild_delete_tag(guildId=ctx.guild.id, key=tag)
-                    await msg.edit(f'Tag {tag} successfully deleted.', view=None)
+                    await msg.edit(f'Tag `{tag}` successfully deleted.', view=None)
                 else:
                     await msg.edit('You don\'t own this tag.', view=None)
             else:
@@ -80,5 +80,5 @@ class Tags(commands.Cog):
             await ctx.send('Tag not found.')
 
 def setup(bot):
-    bot.add_cog(Tags(bot))
+    bot.add_cog(Guild(bot))
     
