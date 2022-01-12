@@ -11,7 +11,8 @@ class Tags(commands.Cog):
 
     @commands.group(name='tag', invoke_without_command=True)
     async def tag(self, ctx):
-        await ctx.send('Main')
+        data = await guild_get_tag(guildId=ctx.guild.id, key=tag)
+        await ctx.send(data['item'][0]['content'])
 
     @tag.command(name='create')
     async def create_tag(self, ctx, name, *, content:str):
