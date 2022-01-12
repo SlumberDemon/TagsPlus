@@ -2,6 +2,7 @@ import discord, datetime
 from discord.ext import commands
 from discord.ext.commands.cooldowns import C
 from src.extras.func import *
+from src.extras.func import guild_edit_tag
 from src.extras.views import *
 
 class Tags(commands.Cog):
@@ -11,8 +12,11 @@ class Tags(commands.Cog):
 
     @commands.group(name='tag', invoke_without_command=True)
     async def tag(self, ctx, tag):
-        data = await guild_get_tag(guildId=ctx.guild.id, key=tag)
-        await ctx.send(data['item'][0]['content'])
+        try:
+            data = await guild_get_tag(guildId=ctx.guild.id, key=tag)
+            await ctx.send(data['item'][0]['content'])
+        except:
+            await ctx.send('Tag not found.')
 
     @tag.command(name='create')
     async def create_tag(self, ctx, name, *, content:str):
@@ -24,8 +28,16 @@ class Tags(commands.Cog):
            await ctx.send('This tag already exists.')
 
     @tag.command(name='edit')
-    async def edit_tag(self, ctx):
-        await ctx.send('Main -> Edit')
+    async def edit_tag(self, ctx, tag, *, content:str):
+        data = await guild_get_tag(guildId=ctx.guild.id, key=tag)
+        owner = data['item'][0]['owner']
+        time = datetime.datetime.now() 
+        if f'{ctx.author.id}' == f'{owner}':
+            await guild_edit_tag(guildId=ctx.guild.id, item=[{"owner":f'{ctx.author.id}', "name":tag, "content":content, "created_at":f'{time.day}/{time.month}/{time.year}'}])
+            await ctx.send(f'Tag {tag} successfully edited.')
+        else:
+            await ctx.send('You don\'t own this tag.', view=None)
+
 
     @tag.command(name='delete')
     async def delete_tag(self, ctx, tag):
@@ -47,11 +59,6 @@ class Tags(commands.Cog):
                 await msg.edit('Tag deletion cancelled.', view=None)
         except:
             await msg.edit('Tag not found.', view=None)
-
-
-    @tag.command(name='show')
-    async def show_tag(self, ctx):
-        await ctx.send('Main -> Show')
 
     @tag.command(name='raw')
     async def raw_tag(self, ctx, tag):
