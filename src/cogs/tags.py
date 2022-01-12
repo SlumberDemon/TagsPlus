@@ -43,9 +43,9 @@ class Tags(commands.Cog):
         # try:
             info = await guild_get_tag(guildId=ctx.guild.id, key=tag)
             em = discord.Embed(title=info['item'][0]['name'], )
-            em.add_field(name='Content', value=info['item'][0]['content'])
-            em.add_field(name='Owner', value='<@' + info['item'][0]['owner'] + '>')
-            em.add_field(name='Created at', value=info['item'][0]['created_at'])
+            em.add_field(name='Content', value=info['item'][0]['content'], inline=False)
+            em.add_field(name='Owner', value='<@' + info['item'][0]['owner'] + '>', inline=True)
+            em.add_field(name='Created at', value=info['item'][0]['created_at'], inline=True)
             await ctx.send(embed=em)
 
 def setup(bot):
