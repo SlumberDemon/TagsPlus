@@ -1,7 +1,9 @@
-from math import exp
-import discord, datetime 
+import discord, datetime
+from discord import guild 
 from discord.ext import commands
 from src.extras.func import *
+from src.extras.func import guild_delete_tag
+from src.extras.func import guild_get_tag
 
 class Tags(commands.Cog):
 
@@ -27,8 +29,12 @@ class Tags(commands.Cog):
 
     @tag.command(name='delete')
     async def delete_tag(self, ctx, tag):
-        # await guild_get_tag(guildID=ctx.guild.id, key=tag)
-        await ctx.send('Placeholder')
+        data = await guild_get_tag(guildId=ctx.guild.id, key=tag)
+        if ctx.author.id == data['item'][0]['owner']:
+            await guild_delete_tag(guildId=ctx.guild.id, key=tag)
+            await ctx.send(f'Tag {tag} successfully deleted.')
+        else:
+            await ctx.send('You don\'t own this tag.')
 
     @tag.command(name='show')
     async def show_tag(self, ctx):
