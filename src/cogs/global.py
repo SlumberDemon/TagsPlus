@@ -27,7 +27,7 @@ class TagsGL(commands.Cog):
         self.bot = bot
         self.func = AuxFunc()
 
-    @commands.group(name='tag', invoke_without_command=True)
+    @commands.group(name='gtag', invoke_without_command=True)
     async def tag(self, ctx: commands.Context, tag: str):
         data = await self.func.fetch_public_tag(key=tag)
         if data:
