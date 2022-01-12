@@ -1,6 +1,8 @@
 import discord, datetime
 from discord.ext import commands
+from discord.ext.commands.cooldowns import C
 from src.extras.func import *
+from src.extras.views import *
 
 class Tags(commands.Cog):
 
@@ -26,15 +28,25 @@ class Tags(commands.Cog):
 
     @tag.command(name='delete')
     async def delete_tag(self, ctx, tag):
-        data = await guild_get_tag(guildId=ctx.guild.id, key=tag)
-        owner = data['item'][0]['owner']
-        print(owner)
-        print(ctx.author.id)
-        if f'{ctx.author.id}' == f'{owner}':
-            await guild_delete_tag(guildId=ctx.guild.id, key=tag)
-            await ctx.send(f'Tag {tag} successfully deleted.')
-        else:
-            await ctx.send('You don\'t own this tag.')
+        try:
+            data = await guild_get_tag(guildId=ctx.guild.id, key=tag)
+            owner = data['item'][0]['owner']
+            view = Confirm(ctx)
+            await ctx.send(f'Want to delete {tag}?', view=view)
+            await view.wait()
+            if view.value is None:
+                await ctx.send('Tag deletion timed out.')
+            elif view.value:
+                if f'{ctx.author.id}' == f'{owner}':
+                    await guild_delete_tag(guildId=ctx.guild.id, key=tag)
+                    await ctx.send(f'Tag {tag} successfully deleted.')
+                else:
+                    await ctx.send('You don\'t own this tag.')
+            else:
+                await ctx.send('Tag deletion cancelled.')
+        except:
+            await ctx.send('Tag not found.')
+
 
     @tag.command(name='show')
     async def show_tag(self, ctx):
