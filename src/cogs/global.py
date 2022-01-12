@@ -38,6 +38,7 @@ class Global(commands.Cog):
             for key in keys:
                 if tag in key:
                     await ctx.send(f'```{all_tags[key]}```')
+                    return
             else:
                 await ctx.send('Tag not found.')
 
@@ -91,6 +92,18 @@ class Global(commands.Cog):
                 for key in keys:
                     if str(owner.id) in key:
                         await ctx.send(f'```{all_tags[key]}```')
+
+    @tag.command(name='all')
+    async def tag_raw(self, ctx: commands.Context):
+        all_tags = await self.func.fetch_public_tag(key='all')
+        string = ''
+        if all_tags:
+            keys = list(all_tags)
+            _replaced = [item.replace('_', ' ') for item in keys]
+            tup_data = [item.split(' ') for item in _replaced]
+            for item in tup_data:
+                string += f'`TAG: {item[0]} | ID: {item[1]}`\n'
+            await ctx.send(f'```{string}```')
 
 
 def setup(bot: discord.Client):
