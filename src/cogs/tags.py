@@ -14,7 +14,7 @@ class Tags(commands.Cog):
     @tag.command(name='create')
     async def create_tag(self, ctx, name, *, content:str):
         try:
-            await guild_create_tag(guildId=ctx.guild.id, item=[{"owner":f'{ctx.author.id}', "name":name, "content":content, "created_at":f'{datetime.datetime.utcnow()}'}], key=name)
+            await guild_create_tag(guildId=ctx.guild.id, item=[{"owner":str(ctx.author.id), "name":name, "content":content, "created_at":f'{datetime.datetime.utcnow()}'}], key=name)
             await ctx.send(f'Tag {name} successfully created.')
         except:
            await ctx.send('This tag already exists.')
