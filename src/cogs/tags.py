@@ -30,7 +30,7 @@ class Tags(commands.Cog):
         owner = data['item'][0]['owner']
         print(owner)
         print(ctx.author.id)
-        if ctx.author.id == owner:
+        if f'{ctx.author.id}' == f'{owner}':
             await guild_delete_tag(guildId=ctx.guild.id, key=tag)
             await ctx.send(f'Tag {tag} successfully deleted.')
         else:
