@@ -49,7 +49,7 @@ class Guild(commands.Cog):
             msg = await ctx.send(f'Want to delete `{tag}` tag?', view=view)
             await view.wait()
             if view.value is None:
-                await ctx.send('Tag deletion timed out.')
+                await msg.edit('Tag deletion timed out.')
             elif view.value:
                 if f'{ctx.author.id}' == f'{owner}':
                     await guild_delete_tag(guildId=ctx.guild.id, key=tag)
