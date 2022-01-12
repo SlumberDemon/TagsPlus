@@ -70,7 +70,12 @@ class Global(commands.Cog):
             await self.func.push_public_tag(item=item, key='all')
 
     @tag.command(name='raw')
-    async def tag_raw(self, ctx: commands.Context, name: str = None, *, user: discord.User = None):
+    async def tag_raw(
+            self,
+            ctx: commands.Context,
+            name: str = None,
+            owner: Union[discord.User, discord.Member] = None
+    ):
         all_tags = await self.func.fetch_public_tag(key='all')
         if all_tags:
             keys = list(all_tags)
@@ -79,9 +84,9 @@ class Global(commands.Cog):
                     if name in key:
                         await ctx.send(f'```{all_tags[key]}```')
 
-            if user:
+            if owner:
                 for key in keys:
-                    if str(user.id) in key:
+                    if str(owner.id) in key:
                         await ctx.send(f'```{all_tags[key]}```')
 
 
