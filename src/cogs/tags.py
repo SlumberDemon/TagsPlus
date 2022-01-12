@@ -14,11 +14,11 @@ class Tags(commands.Cog):
 
     @tag.command(name='create')
     async def create_tag(self, ctx, name, *, content:str):
-        try:
+        # try:
             await guild_create_tag(guildId=ctx.guild.id, item=[{"owner":ctx.author.id, "name":name, "content":content, "created_at":ctx.message.created_at}], key=name)
             await ctx.send(f'Tag {name} successfully created.')
-        except:
-            await ctx.send('This tag already exists.')
+        # except:
+        #    await ctx.send('This tag already exists.')
 
     @tag.command(name='edit')
     async def edit_tag(self, ctx):
