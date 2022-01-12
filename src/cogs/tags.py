@@ -10,7 +10,7 @@ class Tags(commands.Cog):
         self.bot = bot
 
     @commands.group(name='tag', invoke_without_command=True)
-    async def tag(self, ctx):
+    async def tag(self, ctx, tag):
         data = await guild_get_tag(guildId=ctx.guild.id, key=tag)
         await ctx.send(data['item'][0]['content'])
 
