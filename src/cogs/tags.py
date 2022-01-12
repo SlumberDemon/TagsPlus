@@ -1,9 +1,6 @@
 import discord, datetime
-from discord import guild 
 from discord.ext import commands
 from src.extras.func import *
-from src.extras.func import guild_delete_tag
-from src.extras.func import guild_get_tag
 
 class Tags(commands.Cog):
 
@@ -31,6 +28,8 @@ class Tags(commands.Cog):
     async def delete_tag(self, ctx, tag):
         data = await guild_get_tag(guildId=ctx.guild.id, key=tag)
         owner = data['item'][0]['owner']
+        print(owner)
+        print(ctx.authour.id)
         if ctx.author.id == owner:
             await guild_delete_tag(guildId=ctx.guild.id, key=tag)
             await ctx.send(f'Tag {tag} successfully deleted.')
