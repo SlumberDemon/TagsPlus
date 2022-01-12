@@ -1,4 +1,4 @@
-import discord
+import discord, datetime 
 from discord import guild 
 from discord.ext import commands
 from src.extras.func import *
@@ -15,7 +15,7 @@ class Tags(commands.Cog):
     @tag.command(name='create')
     async def create_tag(self, ctx, name, *, content:str):
         # try:
-            await guild_create_tag(guildId=ctx.guild.id, item=[{"owner":ctx.author.id, "name":name, "content":content, "created_at":ctx.message.created_at}], key=name)
+            await guild_create_tag(guildId=ctx.guild.id, item=[{"owner":ctx.author.id, "name":name, "content":content, "created_at":datetime.datetime.fromtimestamp(ctx.message.created_at)], key=name)
             await ctx.send(f'Tag {name} successfully created.')
         # except:
         #    await ctx.send('This tag already exists.')
