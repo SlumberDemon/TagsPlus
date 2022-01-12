@@ -1,8 +1,6 @@
 import discord, datetime
 from discord.ext import commands
-from discord.ext.commands.cooldowns import C
 from src.extras.func import *
-from src.extras.func import guild_edit_tag
 from src.extras.views import *
 
 class Tags(commands.Cog):
