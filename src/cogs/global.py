@@ -43,7 +43,7 @@ class TagsGL(commands.Cog):
         previous = await self.func.fetch_public_tag(key=name)
         if previous:
             await ctx.send('Merging with previous tags')
-            previous[f'{len(previous + 1)}'] = {
+            previous[f'{len(list(previous)) + 1}'] = {
                 "owner": f'{ctx.author.id}',
                 "name": name,
                 "content": content,
