@@ -16,7 +16,7 @@ class Tags(commands.Cog):
     async def create_tag(self, ctx, name, *, content:str):
         try:
             time = datetime.datetime.now() 
-            await guild_create_tag(guildId=ctx.guild.id, item=[{"owner":f'{ctx.author.id}', "name":name, "content":content, "created_at":f'{time.day}/{time.year}/{time.month}'}], key=name)
+            await guild_create_tag(guildId=ctx.guild.id, item=[{"owner":f'{ctx.author.id}', "name":name, "content":content, "created_at":f'{time.day}/{time.month}/{time.year}'}], key=name)
             await ctx.send(f'Tag {name} successfully created.')
         except:
            await ctx.send('This tag already exists.')
@@ -36,12 +36,9 @@ class Tags(commands.Cog):
 
     @tag.command(name='raw')
     async def raw_tag(self, ctx, tag):
-        try:
-            data = await guild_get_tag(guildId=ctx.guild.id, key=tag)
-            em = discord.Embed(description=f'```py' f'\n{data}' f'\n```')
-            await ctx.send(embed=em)
-        except:
-            await ctx.send('Tag not found.')
+        data = await guild_get_tag(guildId=ctx.guild.id, key=tag)
+        em = discord.Embed(description=f'```py' f'\n{data}' f'\n```')
+        await ctx.send(embed=em)
 
     @tag.command(name='info')
     async def info(self, ctx, tag):
