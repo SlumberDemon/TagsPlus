@@ -1,4 +1,5 @@
-import discord 
+import discord
+from discord import guild 
 from discord.ext import commands
 from src.extras.func import *
 
@@ -13,16 +14,20 @@ class Tags(commands.Cog):
 
     @tag.command(name='create')
     async def create_tag(self, ctx, name, *, content:str):
-        await guild_create_tag(guildId=ctx.guild.id, item=[{"owner":ctx.author.id, "name":name, "content":content}], key=name)
-        await ctx.send(f'Tag {name} successfully created.')
+        try:
+            await guild_create_tag(guildId=ctx.guild.id, item=[{"owner":ctx.author.id, "name":name, "content":content, "created_at":ctx.message.created_at}], key=name)
+            await ctx.send(f'Tag {name} successfully created.')
+        except:
+            await ctx.send('This tag already exists.')
 
     @tag.command(name='edit')
     async def edit_tag(self, ctx):
         await ctx.send('Main -> Edit')
 
     @tag.command(name='delete')
-    async def delete_tag(self, ctx):
-        await ctx.send('Main -> Delete')
+    async def delete_tag(self, ctx, tag):
+        # await guild_get_tag(guildID=ctx.guild.id, key=tag)
+        await ctx.send('Placeholder')
 
     @tag.command(name='show')
     async def show_tag(self, ctx):
@@ -30,9 +35,16 @@ class Tags(commands.Cog):
 
     @tag.command(name='raw')
     async def raw_tag(self, ctx, tag):
-        data = await guild_get_tag(guildId = ctx.guild.id, key=f'{tag}')
+        data = await guild_get_tag(guildId=ctx.guild.id, key=tag)
         embed = discord.Embed(description=f'```py' f'\n{data}' f'\n```')
         await ctx.send(embed=embed)
+
+    @tag.command(name='info')
+    async def info(self, ctx, tag):
+        # try:
+            # await guild_get_tag(guildId=ctx.guild.id, key=tag)
+            # embed = discord.Embed()
+        await ctx.send('Placeholder')
 
 def setup(bot):
     bot.add_cog(Tags(bot))
