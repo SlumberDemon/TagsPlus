@@ -3,7 +3,7 @@ from discord.ext import commands
 from src.extras.func import *
 from src.extras.views import *
 
-class Tags(commands.Cog):
+class Guild(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
@@ -80,5 +80,5 @@ class Tags(commands.Cog):
             await ctx.send('Tag not found.')
 
 def setup(bot):
-    bot.add_cog(Tags(bot))
+    bot.add_cog(Guild(bot))
     
