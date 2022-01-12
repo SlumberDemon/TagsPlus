@@ -26,7 +26,7 @@ tags = Tags()
 # Cogs
 
 cogs = [
-    "tags"
+    "guild"
 ]
 
 for cog in cogs:
