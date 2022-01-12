@@ -32,11 +32,14 @@ class Global(commands.Cog):
 
     @commands.group(name='gtag', invoke_without_command=True)
     async def tag(self, ctx: commands.Context, tag: str):
-        data = await self.func.fetch_public_tag(key=tag)
-        if data:
-            await ctx.send(f'{data}')
-        else:
-            await ctx.send('Tag not found.')
+        all_tags = await self.func.fetch_public_tag(key='all')
+        if all_tags:
+            keys = list(all_tags)
+            for key in keys:
+                if tag in key:
+                    await ctx.send(f'```{all_tags[key]}```')
+            else:
+                await ctx.send('Tag not found.')
 
     @tag.command(name='create')
     async def tag_create(self, ctx: commands.Context, name: str, *, content: str):
@@ -55,7 +58,7 @@ class Global(commands.Cog):
                     "content": content,
                     "created_at": f'{time.day}/{time.month}/{time.year}'
                 }
-                await self.func.push_public_tag(item=all_tags, key=keygen)
+                await self.func.push_public_tag(item=all_tags, key='all')
         else:
             await ctx.send(f'Tag `{name}` successfully created.')
             item = {
