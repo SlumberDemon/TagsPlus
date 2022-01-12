@@ -3,11 +3,11 @@ from discord.ext import commands
 from os import getenv
 
 # Intents
-
 intent = discord.Intents.default()
 intent.members = True
 
 # Setup
+
 
 class Tags(commands.Bot):
     def __init__(self):
@@ -21,12 +21,14 @@ class Tags(commands.Bot):
         print(f'Logged in as {self.user} (ID: {self.user.id})')
         print('------')
 
+
 tags = Tags()
 
 # Cogs
 
 cogs = [
-    "guild"
+    "guild",
+    "global"
 ]
 
 for cog in cogs:
