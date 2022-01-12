@@ -66,7 +66,7 @@ class Tags(commands.Cog):
     @tag.command(name='raw')
     async def tag_raw(self, ctx, tag):
         tag = await guild_get_tag(guildId=ctx.guild.id, key=tag)
-        first_step = discord.utils.escape_markdown(tag['content'])
+        first_step = discord.utils.escape_markdown(tag['item'][0]['content'])
         await ctx.safe_send(first_step.replace('<', '\\<'), escape_mentions=False)
 
     @tag.command(name='info')
