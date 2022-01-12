@@ -37,14 +37,14 @@ class Tags(commands.Cog):
     @tag.command(name='raw')
     async def raw_tag(self, ctx, tag):
         data = await guild_get_tag(guildId=ctx.guild.id, key=tag)
-        em = discord.Embed(description=f'```py' f'\n{data}' f'\n```')
+        em = discord.Embed(description=f'```py' f'\n{data}' f'\n```', colour=0xffffff)
         await ctx.send(embed=em)
 
     @tag.command(name='info')
     async def info(self, ctx, tag):
         try:
             info = await guild_get_tag(guildId=ctx.guild.id, key=tag)
-            em = discord.Embed(title=info['item'][0]['name'], )
+            em = discord.Embed(title=info['item'][0]['name'], colour=0xffffff)
             em.add_field(name='Content', value=info['item'][0]['content'], inline=False)
             em.add_field(name='Owner', value='<@' + info['item'][0]['owner'] + '>', inline=True)
             em.add_field(name='Created at', value=info['item'][0]['created_at'], inline=True)
