@@ -19,7 +19,7 @@ class Tags(commands.Cog):
             await ctx.send('Tag not found.')
 
     @tag.command(name='create')
-    async def create_tag(self, ctx, name, *, content:str):
+    async def tag_create(self, ctx, name, *, content:str):
         try:
             time = datetime.datetime.now() 
             await guild_create_tag(guildId=ctx.guild.id, item=[{"owner":f'{ctx.author.id}', "name":name, "content":content, "created_at":f'{time.day}/{time.month}/{time.year}'}], key=name)
@@ -28,7 +28,7 @@ class Tags(commands.Cog):
            await ctx.send('This tag already exists.')
 
     @tag.command(name='edit')
-    async def edit_tag(self, ctx, tag, *, content:str):
+    async def tag_edit(self, ctx, tag, *, content:str):
         time = datetime.datetime.now() 
         try:
             data = await guild_get_tag(guildId=ctx.guild.id, key=tag)
@@ -43,7 +43,7 @@ class Tags(commands.Cog):
 
 
     @tag.command(name='delete')
-    async def delete_tag(self, ctx, tag):
+    async def tag_delete(self, ctx, tag):
         try:
             data = await guild_get_tag(guildId=ctx.guild.id, key=tag)
             owner = data['item'][0]['owner']
@@ -64,13 +64,13 @@ class Tags(commands.Cog):
             await msg.edit('Tag not found.', view=None)
 
     @tag.command(name='raw')
-    async def raw_tag(self, ctx, tag):
-        data = await guild_get_tag(guildId=ctx.guild.id, key=tag)
-        em = discord.Embed(description=f'```py' f'\n{data}' f'\n```', colour=0xffffff)
-        await ctx.send(embed=em)
+    async def tag_raw(self, ctx, tag):
+        tag = await guild_get_tag(guildId=ctx.guild.id, key=tag)
+        first_step = discord.utils.escape_markdown(tag['content'])
+        await ctx.safe_send(first_step.replace('<', '\\<'), escape_mentions=False)
 
     @tag.command(name='info')
-    async def info(self, ctx, tag):
+    async def tag_info(self, ctx, tag):
         try:
             info = await guild_get_tag(guildId=ctx.guild.id, key=tag)
             em = discord.Embed(title=info['item'][0]['name'], colour=0xffffff)
