@@ -1,6 +1,7 @@
 import os
 import discord
 from typing import Union
+from deta import Deta
 from discord.ext import commands
 
 
