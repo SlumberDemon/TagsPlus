@@ -13,11 +13,11 @@ class Tags(commands.Cog):
 
     @tag.command(name='create')
     async def create_tag(self, ctx, name, *, content:str):
-        # try:
+        try:
             await guild_create_tag(guildId=ctx.guild.id, item=[{"owner":f'{ctx.author.id}', "name":name, "content":content, "created_at":f'{datetime.datetime.utcnow()}'}], key=name)
             await ctx.send(f'Tag {name} successfully created.')
-        # except:
-        #    await ctx.send('This tag already exists.')
+        except:
+           await ctx.send('This tag already exists.')
 
     @tag.command(name='edit')
     async def edit_tag(self, ctx):
@@ -41,9 +41,10 @@ class Tags(commands.Cog):
     @tag.command(name='info')
     async def info(self, ctx, tag):
         # try:
-            # await guild_get_tag(guildId=ctx.guild.id, key=tag)
-            # embed = discord.Embed()
-        await ctx.send('Placeholder')
+            info = await guild_get_tag(guildId=ctx.guild.id, key=tag)
+            embed = discord.Embed(title=info['item'][0]['name'], description='Content ' + info['item'][0]['content'])
+            embed.add_field(name='Owner', value='<@' + info['item'][0]['owner'] + '>')
+            embed.add_field(name='Created at', value=info['item'][0]['created_at'])
 
 def setup(bot):
     bot.add_cog(Tags(bot))
