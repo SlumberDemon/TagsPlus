@@ -4,8 +4,6 @@ from typing import Union
 
 deta = Deta(os.getenv('DETA'))
 
-# Guild
-
 
 async def guild_create_tag(guild_id: int, item: Union[list, dict], key: str):
     db = deta.Base(f'Guild-{guild_id}')
@@ -25,4 +23,3 @@ async def guild_get_tag(guild_id: int, key: str):
 async def guild_delete_tag(guild_id: int, key: str):
     db = deta.Base(f'Guild-{guild_id}')
     db.delete(key)
-
