@@ -42,18 +42,21 @@ class Global(commands.Cog):
     async def tag(self, ctx: commands.Context, tag: str):
         all_tags = await self.func.get_cached_tags()
         if all_tags:
-            keys = list(all_tags)
-            for key in keys:
-                if tag in key:
-                    tag_id = key.replace(f'_', ' ').split(' ')[1]
+            tag_names = list(all_tags)
+            embed_list = []
+            for name in tag_names:
+                if tag in name:
+                    tag_id = name.replace(f'_', ' ').split(' ')[1]
                     emd = discord.Embed(
-                        title=f'{all_tags[key]["name"]}',
-                        description=f'{all_tags[key]["content"]}',
+                        title=f'{all_tags[name]["name"]}',
+                        description=f'{all_tags[name]["content"]}',
                         color=0x36393f
                     )
                     emd.set_footer(text=f'Created by {self.bot.get_user(int(tag_id))} | (id: {tag_id})')
-                    await ctx.send(embed=emd)
-                    return
+                    embed_list.append(emd)
+
+            if embed_list:
+                await ctx.send(embeds=embed_list)
             else:
                 await ctx.send('Tag not found.')
 
