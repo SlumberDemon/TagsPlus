@@ -1,9 +1,6 @@
 import discord
 import datetime
-
-from discord import guild
 from src.extras.func import *
-from src.extras.func import test_guild_get_user_tags
 from src.extras.views import *
 from src.extras.emojis import *
 from discord.ext import commands
