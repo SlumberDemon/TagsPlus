@@ -15,5 +15,19 @@ class Test(commands.Cog):
     async def send_emojis(self, ctx):
         await ctx.send(f'{Emo.Tag} {Emo.Tags} {Emo.TagNotFound} {Emo.TagNeutral} {Emo.TagFound}')
 
+    @commands.command(name='tag_test')
+    async def tag_create(self, ctx, name, *, content: str = None):
+        try:
+            if 0 < len(name) >= 3:
+                time = datetime.datetime.now()
+                await test_guild_create_tag(guild_id=ctx.guild.id, item=[
+                    {"name": name, "content": content,
+                     "created_at": f'{time.day}/{time.month}/{time.year}'}], owner=ctx.author.id, key=name)
+                await ctx.send(f'Tag `{name}` successfully created.')
+            else:
+                await ctx.send('To `little` characters, please use three or more.')
+        except Exception:
+            await ctx.send('This tag already exists.')
+
 def setup(bot):
     bot.add_cog(Test(bot))
