@@ -32,8 +32,8 @@ class Test(commands.Cog):
             await ctx.send('This tag already exists.')
 
     @commands.command(name='tags_test')
-    async def test_tags(self, ctx, tag):
-        data = await test_guild_get_user_tags(guild_id=ctx.guild.id, user=f'{ctx.author.id}')
+    async def test_tags(self, ctx, user):
+        data = await test_guild_get_user_tags(guild_id=ctx.guild.id, user=user)
         await ctx.send(data)
 
 def setup(bot):
