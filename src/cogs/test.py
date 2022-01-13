@@ -18,7 +18,7 @@ class Test(commands.Cog):
     async def send_emojis(self, ctx):
         await ctx.send(f'{Emo.Tag} {Emo.Tags} {Emo.TagNotFound} {Emo.TagNeutral} {Emo.TagFound}')
 
-    @commands.command(name='tag_test') # idk the command storing works but still gives error. checked the db and the item got created
+    @commands.command(name='tag_test') 
     async def test_tag_create(self, ctx, name, *, content: str = None):
         try:
             if 0 < len(name) >= 3:
