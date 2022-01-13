@@ -83,7 +83,7 @@ class Guild(commands.Cog):
             em = discord.Embed(title=info['name'], colour=0xffffff)
             em.add_field(name='Content', value=info['content'], inline=False)
             em.add_field(name='Owner', value='<@' + info['owner'] + '>', inline=True)
-            em.add_field(name='Created at', value=info[0]['created_at'], inline=True)
+            em.add_field(name='Created at', value=info['created_at'], inline=True)
             await ctx.send(embed=em)
         else:
             await ctx.send('Tag not found.')
