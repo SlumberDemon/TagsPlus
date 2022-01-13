@@ -51,34 +51,37 @@ class Global(commands.Cog):
 
     @tag.command(name='create')
     async def tag_create(self, ctx: commands.Context, name: str, *, content: str):
-        time = datetime.datetime.now()
-        keygen = f'{name}_{ctx.author.id}'
-        all_tags = await self.func.fetch_public_tag(key='all')
-        if all_tags:
-            previous = all_tags.get(keygen)
-            if previous:
-                await ctx.send('Tag already exists.')
+        if not len(name) < 3:
+            time = datetime.datetime.now()
+            keygen = f'{name}_{ctx.author.id}'
+            all_tags = await self.func.fetch_public_tag(key='all')
+            if all_tags:
+                previous = all_tags.get(keygen)
+                if previous:
+                    await ctx.send('Tag already exists.')
+                else:
+                    await ctx.send(f'Tag `{name}` successfully created.')
+                    all_tags[keygen] = {
+                        "owner": f'{ctx.author.id}',
+                        "name": name,
+                        "content": content,
+                        "created_at": f'{time.day}/{time.month}/{time.year}'
+                    }
+                    await self.func.push_public_tag(item=all_tags, key='all')
             else:
                 await ctx.send(f'Tag `{name}` successfully created.')
-                all_tags[keygen] = {
-                    "owner": f'{ctx.author.id}',
-                    "name": name,
-                    "content": content,
-                    "created_at": f'{time.day}/{time.month}/{time.year}'
-                }
-                await self.func.push_public_tag(item=all_tags, key='all')
-        else:
-            await ctx.send(f'Tag `{name}` successfully created.')
-            item = {
-                keygen: {
-                    "owner": f'{ctx.author.id}',
-                    "name": name,
-                    "content": content,
-                    "created_at": f'{time.day}/{time.month}/{time.year}'
-                }
+                item = {
+                    keygen: {
+                        "owner": f'{ctx.author.id}',
+                        "name": name,
+                        "content": content,
+                        "created_at": f'{time.day}/{time.month}/{time.year}'
+                    }
 
-            }
-            await self.func.push_public_tag(item=item, key='all')
+                }
+                await self.func.push_public_tag(item=item, key='all')
+        else:
+            await ctx.send('Tag name must be at least 3 characters long.')
 
     @tag.command(name='raw')
     async def tag_raw(
