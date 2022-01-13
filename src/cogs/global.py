@@ -1,6 +1,28 @@
-import datetime, discord
+import os
+import discord
+import datetime
+from deta import Deta
+from typing import Union
 from discord.ext import commands
-from src.extras.func import *
+
+
+class AuxFunc:
+
+    def __init__(self):
+        self.deta = Deta(os.getenv('DETA'))
+        self.db = self.deta.Base('_PUBLIC_TAGS')
+        self.cache = self.db.get('all')  # soon implement cache for more efficiency
+
+    async def push_public_tag(self, item: Union[list, dict], key: str):
+        return self.db.put({'item': item}, key)
+
+    async def fetch_public_tag(self, key: str):
+        data = self.db.get(key)
+        if data:
+            return data['item']
+        else:
+            return None
+
 
 class Global(commands.Cog):
 
