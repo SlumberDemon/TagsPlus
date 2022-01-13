@@ -73,7 +73,9 @@ class Guild(commands.Cog):
     async def tag_raw(self, ctx, tag):
         tag = await guild_get_tag(guild_id=ctx.guild.id, key=tag)
         first_step = discord.utils.escape_markdown(tag['item'][0]['content'])
-        await ctx.send(first_step.replace('<', '\\<'))
+        data = (first_step.replace('<', '\\<'))
+        embed = discord.Embed(description=f'```py' f'\n{data}' f'\n```', colour=0xffffff)
+        await ctx.send(embed=embed)
 
     @tag.command(name='info')
     async def tag_info(self, ctx, tag):
