@@ -24,7 +24,7 @@ class Guild(commands.Cog):
                 await guild_create_tag(guildId=ctx.guild.id, item=[{"owner":f'{ctx.author.id}', "name":name, "content":content, "created_at":f'{time.day}/{time.month}/{time.year}'}], key=name)
                 await ctx.send(f'Tag `{name}` successfully created.')
             else:
-                await ctx.send('To `insufficient` characters, please use three or more.')
+                await ctx.send('Tag name must be at least 3 characters long.')
         except:
            await ctx.send('This tag already exists.')
 
