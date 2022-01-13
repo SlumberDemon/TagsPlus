@@ -30,7 +30,7 @@ async def guild_delete_tag(guild_id: int, key: str):
 # Test functions
 
 
-def test_guild_create_tag(guild_id: int, item: Union[list, dict], user: int, key: str):
+def test_guild_create_tag(guild_id: int, item: Union[list, dict], user: str, key: str):
     db = deta.Base(f'Guild-{guild_id}')
     db.insert({'item': item, 'user': user}, key)
 
