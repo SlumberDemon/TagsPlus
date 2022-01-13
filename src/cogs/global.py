@@ -37,7 +37,8 @@ class Global(commands.Cog):
             keys = list(all_tags)
             for key in keys:
                 if tag in key:
-                    await ctx.send(f'```{all_tags[key]}```')
+                    await ctx.send(embed=discord.Embed(
+                        title=f'{all_tags[key]["name"]}', description=f'{all_tags[key]["content"]}', color=0x36393f))
                     return
             else:
                 await ctx.send('Tag not found.')
@@ -102,8 +103,8 @@ class Global(commands.Cog):
             _replaced = [item.replace('_', ' ') for item in keys]
             tup_data = [item.split(' ') for item in _replaced]
             for item in tup_data:
-                string += f'`TAG: {item[0]} | ID: {item[1]}`\n'
-            await ctx.send(f'```{string}```')
+                string += f'**{item[0]}** (id: {item[1]})\n\n'
+            await ctx.send(embed=discord.Embed(title='All Global Tags', description=f'{string}', color=0x36393f))
 
 
 def setup(bot: discord.Client):
