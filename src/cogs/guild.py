@@ -34,18 +34,19 @@ class Guild(commands.Cog):
 
     @tag.command(name='edit')
     async def tag_edit(self, ctx, tag, *, content: str):
-        time = datetime.datetime.now()
-        try:
-            data = await guild_get_tag(guild_id=ctx.guild.id, key=tag)
+        data = await guild_get_tag(guild_id=ctx.guild.id, key=tag)
+
+        if data and data['item']:
             owner = data['item'][0]['owner']
             if f'{ctx.author.id}' == f'{owner}':
+                time = datetime.datetime.now()
                 await guild_edit_tag(guild_id=ctx.guild.id, item=[
                     {"owner": f'{ctx.author.id}', "name": tag, "content": content,
                      "created_at": f'{time.day}/{time.month}/{time.year}'}], key=tag)
                 await ctx.send(f'Tag `{tag}` successfully edited.')
             else:
                 await ctx.send('You don\'t own this tag.', view=None)
-        except Exception:
+        else:
             await ctx.send('Tag not found.')
 
     @tag.command(name='delete')
