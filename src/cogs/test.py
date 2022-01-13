@@ -23,7 +23,7 @@ class Test(commands.Cog):
                 owner = ctx.author.id
                 await test_guild_create_tag(guild_id=ctx.guild.id, item=[
                     {"owner": owner, "name": name, "content": content,
-                     "created_at": f'{time.day}/{time.month}/{time.year}'}], owner=owner, key=name)
+                     "created_at": f'{time.day}/{time.month}/{time.year}'}], user=owner, key=name)
                 await ctx.send(f'Tag `{name}` successfully created.')
             else:
                 await ctx.send('To `little` characters, please use three or more.')
