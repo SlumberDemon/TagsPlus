@@ -11,17 +11,25 @@ class AuxFunc:
     def __init__(self):
         self.deta = Deta(os.getenv('DETA'))
         self.db = self.deta.Base('_PUBLIC_TAGS')
-        self.cache = self.db.get('all')  # soon implement cache for more efficiency
+        self.cache = self.db.get('all')
 
-    async def push_public_tag(self, item: Union[list, dict], key: str):
+    async def push_public_tag(self, item: dict, key: str):
+        await self.update_cache(item)
         return self.db.put({'item': item}, key)
 
     async def fetch_public_tag(self, key: str):
         data = self.db.get(key)
         if data:
-            return data['item']
-        else:
-            return None
+            return data.get('item')
+        return None
+
+    async def get_cached_tags(self):
+        if self.cache:
+            return self.cache.get('item')
+        return None
+
+    async def update_cache(self, item: dict):
+        self.cache = {'item': item}
 
 
 class Global(commands.Cog):
@@ -32,7 +40,7 @@ class Global(commands.Cog):
 
     @commands.group(name='gtag', invoke_without_command=True)
     async def tag(self, ctx: commands.Context, tag: str):
-        all_tags = await self.func.fetch_public_tag(key='all')
+        all_tags = await self.func.get_cached_tags()
         if all_tags:
             keys = list(all_tags)
             for key in keys:
@@ -54,7 +62,7 @@ class Global(commands.Cog):
         if not len(name) < 3:
             time = datetime.datetime.now()
             keygen = f'{name}_{ctx.author.id}'
-            all_tags = await self.func.fetch_public_tag(key='all')
+            all_tags = await self.func.get_cached_tags()
             if all_tags:
                 previous = all_tags.get(keygen)
                 if previous:
@@ -90,7 +98,7 @@ class Global(commands.Cog):
             name: str = None,
             owner: Union[discord.User, discord.Member] = None
     ):
-        all_tags = await self.func.fetch_public_tag(key='all')
+        all_tags = await self.func.get_cached_tags()
         if all_tags:
             keys = list(all_tags)
             if name:
@@ -105,7 +113,7 @@ class Global(commands.Cog):
 
     @tag.command(name='all')
     async def tag_raw(self, ctx: commands.Context):
-        all_tags = await self.func.fetch_public_tag(key='all')
+        all_tags = await self.func.get_cached_tags()
         string = ''
         if all_tags:
             keys = list(all_tags)
