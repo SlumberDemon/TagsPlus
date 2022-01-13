@@ -19,9 +19,12 @@ class Guild(commands.Cog):
     @tag.command(name='create')
     async def tag_create(self, ctx, name, *, content:str=None):
         try:
-            time = datetime.datetime.now() 
-            await guild_create_tag(guildId=ctx.guild.id, item=[{"owner":f'{ctx.author.id}', "name":name, "content":content, "created_at":f'{time.day}/{time.month}/{time.year}'}], key=name)
-            await ctx.send(f'Tag `{name}` successfully created.')
+            if 0 < len(name) >=3:
+                time = datetime.datetime.now() 
+                await guild_create_tag(guildId=ctx.guild.id, item=[{"owner":f'{ctx.author.id}', "name":name, "content":content, "created_at":f'{time.day}/{time.month}/{time.year}'}], key=name)
+                await ctx.send(f'Tag `{name}` successfully created.')
+            else:
+                await ctx.send('To `little` characters, please use three or more.')
         except:
            await ctx.send('This tag already exists.')
 
