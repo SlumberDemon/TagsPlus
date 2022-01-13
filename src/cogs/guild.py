@@ -35,7 +35,6 @@ class Guild(commands.Cog):
     @tag.command(name='edit')
     async def tag_edit(self, ctx, tag, *, content: str):
         data = await guild_get_tag(guild_id=ctx.guild.id, key=tag)
-
         if data and data['item']:
             owner = data['item'][0]['owner']
             if f'{ctx.author.id}' == f'{owner}':
@@ -78,14 +77,15 @@ class Guild(commands.Cog):
 
     @tag.command(name='info')
     async def tag_info(self, ctx, tag):
-        try:
-            info = await guild_get_tag(guild_id=ctx.guild.id, key=tag)
-            em = discord.Embed(title=info['item'][0]['name'], colour=0xffffff)
-            em.add_field(name='Content', value=info['item'][0]['content'], inline=False)
-            em.add_field(name='Owner', value='<@' + info['item'][0]['owner'] + '>', inline=True)
-            em.add_field(name='Created at', value=info['item'][0]['created_at'], inline=True)
+        data = await guild_get_tag(guild_id=ctx.guild.id, key=tag)
+        if data and data['item']:
+            info = data['item'][0]
+            em = discord.Embed(title=info['name'], colour=0xffffff)
+            em.add_field(name='Content', value=info['content'], inline=False)
+            em.add_field(name='Owner', value='<@' + info['owner'] + '>', inline=True)
+            em.add_field(name='Created at', value=info[0]['created_at'], inline=True)
             await ctx.send(embed=em)
-        except Exception:
+        else:
             await ctx.send('Tag not found.')
 
 
