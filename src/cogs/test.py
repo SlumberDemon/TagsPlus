@@ -20,7 +20,7 @@ class Test(commands.Cog):
 
             if 0 < len(name) >= 3:
                 time = datetime.datetime.now()
-                owner = ctx.author.id
+                owner = f'{ctx.author.id}'
                 await test_guild_create_tag(guild_id=ctx.guild.id, item=[{"owner": owner, "name": name, "content": content, "created_at": f'{time.day}/{time.month}/{time.year}'}], user=owner, key=name)
                 await ctx.send(f'Tag `{name}` successfully created.')
             else:
