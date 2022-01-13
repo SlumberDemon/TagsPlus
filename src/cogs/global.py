@@ -37,8 +37,14 @@ class Global(commands.Cog):
             keys = list(all_tags)
             for key in keys:
                 if tag in key:
-                    await ctx.send(embed=discord.Embed(
-                        title=f'{all_tags[key]["name"]}', description=f'{all_tags[key]["content"]}', color=0x36393f))
+                    tag_id = key.replace(f'_', ' ').split(' ')[1]
+                    emd = discord.Embed(
+                        title=f'{all_tags[key]["name"]}',
+                        description=f'{all_tags[key]["content"]}',
+                        color=0x36393f
+                    )
+                    emd.set_footer(text=f'Created by {self.bot.get_user(int(tag_id))} | (id: {tag_id})')
+                    await ctx.send(embed=emd)
                     return
             else:
                 await ctx.send('Tag not found.')
