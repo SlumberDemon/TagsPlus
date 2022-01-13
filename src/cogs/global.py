@@ -50,7 +50,7 @@ class Global(commands.Cog):
                     emd = discord.Embed(
                         title=f'{all_tags[name]["name"]}',
                         description=f'{all_tags[name]["content"]}',
-                        color=0x36393f
+                        color=0xffffff
                     )
                     emd.set_footer(text=f'Created by {self.bot.get_user(int(tag_id))} | (id: {tag_id})')
                     embed_list.append(emd)
@@ -124,7 +124,7 @@ class Global(commands.Cog):
             tup_data = [item.split(' ') for item in _replaced]
             for item in tup_data:
                 string += f'**{item[0]}** (id: {item[1]})\n\n'
-            await ctx.send(embed=discord.Embed(title='All Global Tags', description=f'{string}', color=0x36393f))
+            await ctx.send(embed=discord.Embed(title='All Global Tags', description=f'{string}', color=0xffffff))
 
 
 def setup(bot: discord.Client):
