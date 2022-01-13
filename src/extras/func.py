@@ -24,9 +24,5 @@ async def guild_delete_tag(guild_id: int, key: str):
     db = deta.Base(f'Guild-{guild_id}')
     db.delete(key)
 
-async def guild_search_tag(guild_id: int:
-    db = deta.Base(f'Guild-{guild_id}')
-    return db.fetch()
-
 
 
