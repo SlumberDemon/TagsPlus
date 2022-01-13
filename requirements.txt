@@ -1,2 +1,2 @@
 git+https://github.com/Rapptz/discord.py
-deta==1.0.0
+deta==1.0.1
