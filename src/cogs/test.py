@@ -1,6 +1,9 @@
 import discord
 import datetime
+
+from discord import guild
 from src.extras.func import *
+from src.extras.func import test_guild_get_user_tags
 from src.extras.views import *
 from src.extras.emojis import *
 from discord.ext import commands
@@ -28,6 +31,10 @@ class Test(commands.Cog):
         except Exception:
             await ctx.send('This tag already exists.')
 
+    @commands.command(name='tags_test')
+    async def test_tags(self, ctx, tag):
+        data = await test_guild_get_user_tags(guild_id=ctx.guild.id, user=f'{ctx.author.id}')
+        await ctx.send(data)
 
 def setup(bot):
     bot.add_cog(Test(bot))
