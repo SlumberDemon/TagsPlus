@@ -31,7 +31,8 @@ class Test(commands.Cog):
     @commands.command(name='tags_test')
     async def test_tags(self, ctx, user):
         data = await test_guild_get_user_tags(guild_id=ctx.guild.id, owner=user)
-        await ctx.send(data)
+        await ctx.send(data.items)
+        await ctx.send(f'This user owns {data.count} Tag(s)')
 
 def setup(bot):
     bot.add_cog(Test(bot))
