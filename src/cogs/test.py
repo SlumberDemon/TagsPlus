@@ -31,6 +31,13 @@ class Test(commands.Cog):
     @commands.command(name='tags_test')
     async def test_tags(self, ctx, user):
         data = await test_guild_fetch_tag(guild_id=ctx.guild.id, owner=user)
+        tags = ''
+        for item in data.items:
+            tags+=item.key
+        em = discord.Embed(description=tags)
+        await ctx.send(embed=em)
+
+
         await ctx.send(data.items)
         await ctx.send(f'This user owns {data.count} Tag(s)')
 
