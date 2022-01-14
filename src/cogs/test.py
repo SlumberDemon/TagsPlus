@@ -18,7 +18,7 @@ class Test(commands.Cog):
     @commands.command(name='test')
     async def tags(self, ctx, user: discord.User=None):
         user = ctx.author if not user else user
-        data = await test_guild_fetch_tag(guild_id=ctx.guild.id, owner=user)
+        data = await test_guild_fetch_tag(guild_id=ctx.guild.id, owner=f'{user}')
         tags = ''
         for item in data.items:
             tags+=' ' + item['key'] + ' \n'
