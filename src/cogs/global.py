@@ -25,14 +25,14 @@ class AuxFunc:
     async def get_tag_by_name(self, name: str):
         raw = self.db.get(name)
         if raw:
-            return raw['item']
+            return raw
         return None
 
     async def find_all(self, ctx: commands.Context, query: str):
         results = []
         as_name = await self.get_tag_by_name(query)
         if as_name:
-            results.append({'item': as_name})
+            results.append(as_name)
         if query.isdigit():
             as_id = await self.fetch_tag_by_owner(int(query))
             if as_id:
