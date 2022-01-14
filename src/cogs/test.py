@@ -15,14 +15,15 @@ class Test(commands.Cog):
     async def send_emojis(self, ctx):
         await ctx.send(f'{Emo.Tag} {Emo.Tags} {Emo.TagNotFound} {Emo.TagNeutral} {Emo.TagFound}')
 
-    @commands.command(name='tags_test')
-    async def test_tags(self, ctx, user):
+    @commands.command(name='test')
+    async def tags(self, ctx, discord.User=None):
+        user = ctx.author if not user else user
         data = await test_guild_fetch_tag(guild_id=ctx.guild.id, owner=user)
         tags = ''
         for item in data.items:
             tags+=' ' + item['key'] + ' \n'
-        em = discord.Embed(title=f'{user}\'s Tags', description=tags)
-        em.set_footer(text=f'This user owns: {data.count} Tag(s)')
+        em = discord.Embed(title=f'{user.name}\'s Tags', description=tags)
+        em.set_footer(text=f'{data.count} Tag(s)')
         await ctx.send(embed=em)
 
 def setup(bot):
