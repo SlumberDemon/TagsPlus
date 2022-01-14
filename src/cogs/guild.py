@@ -92,7 +92,7 @@ class Guild(commands.Cog):
     @tag.command(name='search')
     async def tag_search(self, ctx, tag):
         data = await guild_fetch_tag(guild_id=ctx.guild.id, key=tag)
-        await ctx.send(data.items)
+        await ctx.send(data)
 
     @commands.command(name='tags')
     async def user_tags(self, ctx, user: discord.User=None):
