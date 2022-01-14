@@ -36,4 +36,4 @@ async def test_guild_create_tag(guild_id: int, item: Union[list, dict], owner: s
 
 async def test_guild_get_user_tags(guild_id: int, owner: str):
     db = deta.Base(f'Guild-{guild_id}')
-    return db.get(owner)
+    return db.fetch({'owner': owner})
