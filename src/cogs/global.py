@@ -12,21 +12,40 @@ class AuxFunc:
         self.deta = Deta(os.getenv('DETA'))
         self.db = self.deta.Base('_PUBLIC_TAGS')
 
-    async def push_public_tag(self, item: dict, owner_id: int, key: str):
-        return self.db.put({'item': item, 'owner': str(owner_id)}, key)
-
     async def insert_public_tag(self, item: dict, owner_id: int, key: str):
         try:
-            self.db.insert({'item': item, 'owner': str(owner_id)}, key)
+            self.db.insert(data={'item': item, 'owner': str(owner_id)}, key=key)
             return True
         except Exception:
             return False
 
-    async def fetch_public_tag(self, key: str):
-        data = self.db.get(key)
-        if data:
-            return data.get('item'), data.get('owner')
-        return None, None
+    async def fetch_tag_by_owner(self, owner_id: int) -> list:
+        return self.db.fetch({"owner": str(owner_id)}).items
+
+    async def get_tag_by_name(self, name: str):
+        raw = self.db.get(name)
+        if raw:
+            return raw['item']
+        return None
+
+    async def find_all(self, ctx: commands.Context, query: str):
+        results = []
+        as_name = await self.get_tag_by_name(query)
+        if as_name:
+            results.append({'item': as_name})
+        if query.isdigit():
+            as_id = await self.fetch_tag_by_owner(int(query))
+            if as_id:
+                results.extend(as_id)
+        user = await commands.UserConverter().convert(ctx, query)
+        if user:
+            as_user = await self.fetch_tag_by_owner(user.id)
+            if as_user:
+                results.extend(as_user)
+        return list(set(results))
+
+    async def fetch_all_tags(self):
+        return self.db.fetch().items
 
 
 class Global(commands.Cog):
@@ -37,20 +56,9 @@ class Global(commands.Cog):
 
     @commands.group(name='gtag', invoke_without_command=True)
     async def tag(self, ctx: commands.Context, tag: str):
-        data, owner = await self.func.fetch_public_tag(key=tag)
-        if data and owner:
-            emd = discord.Embed(
-                title=f'{data.get("name")}',
-                description=f'{data.get("content")}',
-                color=0xffffff
-            )
-            user = await self.bot.fetch_user(int(owner))
-            emd.set_footer(text=f'Created by {user} | ( id: {owner} )')
-            await ctx.send(embed=emd)
-        else:
-            await ctx.send('Tag not found.')
+        pass
 
-    @tag.command(name='create')
+    @tag.command(name='add')
     async def gtag_create(self, ctx: commands.Context, name: str, *, content: str):
         if not len(name) < 3:
             time = datetime.datetime.now()
@@ -64,16 +72,17 @@ class Global(commands.Cog):
             if check:
                 await ctx.send(f'Tag `{name}` created successfully!')
             else:
-                await ctx.send(f'Tag `{name}` already exists!')
+                await ctx.send(f'Tag {name} already exists.')
         else:
             await ctx.send('Tag name must be at least 3 characters long.')
 
-    @tag.command(name='raw')
-    async def gtag_raw(self, ctx: commands.Context, name: str):
-        data, _ = await self.func.fetch_public_tag(key=name)
-        if data:
-            emd = discord.Embed(description=f'{data}', color=0xffffff)
-            await ctx.send(embed=emd)
+    @tag.command(name='find')
+    async def gtag_find(self, ctx: commands.Context, query: str):
+        results = await self.func.find_all(ctx, query)
+        if results:
+            await ctx.send(f'**Found {len(results)} results:**\n{results}')
+        else:
+            await ctx.send('No results found.')
 
 
 def setup(bot: discord.Client):

@@ -33,10 +33,11 @@ class Test(commands.Cog):
         data = await test_guild_fetch_tag(guild_id=ctx.guild.id, owner=user)
         tags = ''
         for item in data.items:
-            tags+=' ' + item['key'] + ' \n'
+            tags += ' ' + item['key'] + ' \n'
         em = discord.Embed(title=f'{user}\'s Tags', description=tags)
         em.set_footer(text=f'This user owns: {data.count} Tag(s)')
         await ctx.send(embed=em)
+
 
 def setup(bot):
     bot.add_cog(Test(bot))
