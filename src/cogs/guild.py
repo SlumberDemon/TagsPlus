@@ -93,5 +93,17 @@ class Guild(commands.Cog):
     async def tag_search(self, ctx, tag):
         await ctx.send('Placeholder')
 
+    @commands.command(name='tags')
+    async def user_tags(self, ctx, user: discord.User=None):
+        user = ctx.author if not user else user
+        data = await test_guild_fetch_tag(guild_id=ctx.guild.id, owner=f'{user.id}')
+        tags = ''
+        for item in data.items:
+            tags+=' ' + item['key'] + ' \n'
+        em = discord.Embed(description=tags)
+        em.set_author(name=user.display_name, icon_url=user.avatar.url)
+        em.set_footer(text=f'{data.count} Tag(s)')
+        await ctx.send(embed=em)
+
 def setup(bot):
     bot.add_cog(Guild(bot))

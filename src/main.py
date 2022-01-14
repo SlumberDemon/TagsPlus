@@ -30,8 +30,7 @@ tags = Tags()
 cogs = [
     "guild",
     "global",
-    "error",
-    "test"
+    "error"
 ]
 
 for cog in cogs:
