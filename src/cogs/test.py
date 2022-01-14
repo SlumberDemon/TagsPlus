@@ -34,12 +34,9 @@ class Test(commands.Cog):
         tags = ''
         for item in data.items:
             tags+=' ' + item['key'] + ' \n'
-        em = discord.Embed(description=tags)
+        em = discord.Embed(title=f'{user}\'s Tags', description=tags)
+        em.set_footer(text=f'This user owns: {data.count} Tag(s)')
         await ctx.send(embed=em)
-
-
-        await ctx.send(data.items)
-        await ctx.send(f'This user owns {data.count} Tag(s)')
 
 def setup(bot):
     bot.add_cog(Test(bot))
