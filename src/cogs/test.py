@@ -33,7 +33,7 @@ class Test(commands.Cog):
         data = await test_guild_fetch_tag(guild_id=ctx.guild.id, owner=user)
         tags = ''
         for item in data.items:
-            tags+=(item['key'])
+            tags+=f' {item['key']} \n'
         em = discord.Embed(description=tags)
         await ctx.send(embed=em)
 
