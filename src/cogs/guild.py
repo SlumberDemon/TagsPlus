@@ -91,7 +91,7 @@ class Guild(commands.Cog):
 
     @tag.command(name='search')
     async def tag_search(self, ctx, tag):
-        await 
+        await ctx.send('placeholder')
 
     @commands.command(name='tags')
     async def user_tags(self, ctx, user: discord.User=None):
