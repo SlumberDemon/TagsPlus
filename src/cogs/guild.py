@@ -24,7 +24,7 @@ class Guild(commands.Cog):
             if 0 < len(name) >= 3:
                 time = datetime.datetime.now()
                 owner = f'{ctx.author.id}'
-                await test_guild_create_tag(guild_id=ctx.guild.id, item=[{"owner": owner, "name": name, "content": content, "created_at": f'{time.day}/{time.month}/{time.year}'}], owner=owner, key=name)
+                await guild_create_tag(guild_id=ctx.guild.id, item=[{"owner": owner, "name": name, "content": content, "created_at": f'{time.day}/{time.month}/{time.year}'}], owner=owner, key=name)
                 await ctx.send(f'Tag `{name}` successfully created.')
             else:
                 await ctx.send('To `little` characters, please use three or more.')
@@ -96,7 +96,7 @@ class Guild(commands.Cog):
     @commands.command(name='tags')
     async def user_tags(self, ctx, user: discord.User=None):
         user = ctx.author if not user else user
-        data = await test_guild_fetch_tag(guild_id=ctx.guild.id, owner=f'{user.id}')
+        data = await guild_fetch_user(guild_id=ctx.guild.id, owner=f'{user.id}')
         tags = ''
         for item in data.items:
             tags+=' ' + item['key'] + ' \n'
