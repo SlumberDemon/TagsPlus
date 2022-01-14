@@ -16,7 +16,7 @@ class Test(commands.Cog):
         await ctx.send(f'{Emo.Tag} {Emo.Tags} {Emo.TagNotFound} {Emo.TagNeutral} {Emo.TagFound}')
 
     @commands.command(name='test')
-    async def tags(self, ctx, discord.User=None):
+    async def tags(self, ctx, user: discord.User=None):
         user = ctx.author if not user else user
         data = await test_guild_fetch_tag(guild_id=ctx.guild.id, owner=user)
         tags = ''
