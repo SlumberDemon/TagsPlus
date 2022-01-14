@@ -23,9 +23,8 @@ class Guild(commands.Cog):
         try:
             if 0 < len(name) >= 3:
                 time = datetime.datetime.now()
-                await guild_create_tag(guild_id=ctx.guild.id, item=[
-                    {"owner": f'{ctx.author.id}', "name": name, "content": content,
-                     "created_at": f'{time.day}/{time.month}/{time.year}'}], key=name)
+                owner = f'{ctx.author.id}'
+                await guild_create_tag(guild_id=ctx.guild.id, item=[{"owner": owner, "name": name, "content": content, "created_at": f'{time.day}/{time.month}/{time.year}'}], owner=owner, key=name)
                 await ctx.send(f'Tag `{name}` successfully created.')
             else:
                 await ctx.send('To `little` characters, please use three or more.')
@@ -93,6 +92,18 @@ class Guild(commands.Cog):
     @tag.command(name='search')
     async def tag_search(self, ctx, tag):
         await ctx.send('Placeholder')
+
+    @commands.command(name='tags')
+    async def user_tags(self, ctx, user: discord.User=None):
+        user = ctx.author if not user else user
+        data = await guild_fetch_user(guild_id=ctx.guild.id, owner=f'{user.id}')
+        tags = ''
+        for item in data.items:
+            tags+=' ' + item['key'] + ' \n'
+        em = discord.Embed(description=tags)
+        em.set_author(name=user.display_name, icon_url=user.avatar.url)
+        em.set_footer(text=f'{data.count} Tag(s)')
+        await ctx.send(embed=em)
 
 def setup(bot):
     bot.add_cog(Guild(bot))
