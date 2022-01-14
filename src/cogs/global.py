@@ -37,12 +37,16 @@ class AuxFunc:
             as_id = await self.fetch_tag_by_owner(int(query))
             if as_id:
                 results.extend(as_id)
-        user = await commands.UserConverter().convert(ctx, query)
-        if user:
-            as_user = await self.fetch_tag_by_owner(user.id)
-            if as_user:
-                results.extend(as_user)
-        return list(set(results))
+        try:
+            user = await commands.UserConverter().convert(ctx, query)
+            if user:
+                as_user = await self.fetch_tag_by_owner(user.id)
+                if as_user:
+                    results.extend(as_user)
+        except Exception:
+            pass
+
+        return [i for n, i in enumerate(results) if i not in results[:n]]
 
     async def fetch_all_tags(self):
         return self.db.fetch().items
@@ -79,8 +83,15 @@ class Global(commands.Cog):
     @tag.command(name='find')
     async def gtag_find(self, ctx: commands.Context, query: str):
         results = await self.func.find_all(ctx, query)
+
+        def embed_maker(data: dict):
+            embed = discord.Embed(title=data['name'], description=data['content'], color=0xffffff)
+            embed.set_footer(text=f'Created on {data["created_at"]}')
+            return embed
+
         if results:
-            await ctx.send(f'**Found {len(results)} results:**\n{results}')
+            embeds = [embed_maker(data['item']) for data in results]
+            await ctx.send(f'**Found {len(results)} Result(s):**', embeds=embeds)
         else:
             await ctx.send('No results found.')
 
