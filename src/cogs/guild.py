@@ -92,7 +92,7 @@ class Guild(commands.Cog):
 
     @tag.command(name='search')
     async def tag_search(self, ctx, query):
-        data = await find_tags(query)
+        data = await find_tags(self, query)
         await ctx.send(data)
 
     @commands.command(name='tags')
