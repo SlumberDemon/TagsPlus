@@ -52,7 +52,26 @@ class Slash(commands.Cog):
         else:
             await ctx.send('Tag not found.')
 
-    
+    @tag.sub_command(description='Delete tag', options=[Option('name', 'Tag name', OptionType.STRING, True)])
+    async def delete(self, ctx, name):
+        data = await guild_get_tag(guild_id=ctx.guild.id, key=name)
+        if data and data['item']:
+            owner = data['item'][0]['owner']
+            view = Confirm(ctx)
+            msg = await ctx.send(f'Want to delete `{name}` tag?', view=view)
+            await view.wait()
+            if view.value is None:
+                await msg.edit('Tag deletion timed out.')
+            elif view.value:
+                if f'{ctx.author.id}' == f'{owner}':
+                    await guild_delete_tag(guild_id=ctx.guild.id, key=name)
+                    await msg.edit(f'Tag `{name}` successfully deleted.', view=None)
+                else:
+                    await msg.edit('You don\'t own this tag.', view=None)
+            else:
+                await msg.edit('Tag deletion cancelled.', view=None)
+        else:
+            await ctx.send('Tag not found.', view=None)
 
 
 def setup(bot):

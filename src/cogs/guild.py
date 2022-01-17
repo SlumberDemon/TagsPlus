@@ -48,19 +48,19 @@ class Guild(commands.Cog):
             await ctx.send('Tag not found.')
 
     @tag.command(name='delete')
-    async def tag_delete(self, ctx, tag):
-        data = await guild_get_tag(guild_id=ctx.guild.id, key=tag)
+    async def tag_delete(self, ctx, name):
+        data = await guild_get_tag(guild_id=ctx.guild.id, key=name)
         if data and data['item']:
             owner = data['item'][0]['owner']
             view = Confirm(ctx)
-            msg = await ctx.send(f'Want to delete `{tag}` tag?', view=view)
+            msg = await ctx.send(f'Want to delete `{name}` tag?', view=view)
             await view.wait()
             if view.value is None:
                 await msg.edit('Tag deletion timed out.')
             elif view.value:
                 if f'{ctx.author.id}' == f'{owner}':
-                    await guild_delete_tag(guild_id=ctx.guild.id, key=tag)
-                    await msg.edit(f'Tag `{tag}` successfully deleted.', view=None)
+                    await guild_delete_tag(guild_id=ctx.guild.id, key=name)
+                    await msg.edit(f'Tag `{name}` successfully deleted.', view=None)
                 else:
                     await msg.edit('You don\'t own this tag.', view=None)
             else:
