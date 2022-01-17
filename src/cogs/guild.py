@@ -1,7 +1,6 @@
 import discord
 import datetime
 from src.extras.func import *
-from src.extras.func import find_tags
 from src.extras.views import *
 from discord.ext import commands
 
