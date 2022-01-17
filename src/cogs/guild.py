@@ -71,10 +71,13 @@ class Guild(commands.Cog):
     @tag.command(name='raw')
     async def tag_raw(self, ctx, name):
         tag = await guild_get_tag(guild_id=ctx.guild.id, key=name)
-        first_step = discord.utils.escape_markdown(tag['item'][0]['content'])
-        data = (first_step.replace('<', '\\<'))
-        embed = discord.Embed(description=f'\n{data}', colour=0xffffff)
-        await ctx.send(embed=embed)
+        if tag:
+            first_step = discord.utils.escape_markdown(tag['item'][0]['content'])
+            data = (first_step.replace('<', '\\<'))
+            embed = discord.Embed(description=f'\n{data}', colour=0xffffff)
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send('Tag not found.')
 
     @tag.command(name='info')
     async def tag_info(self, ctx, name):
