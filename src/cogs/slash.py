@@ -11,7 +11,7 @@ class Slash(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @dislash.slash_command(description='Setup commands')
+    @dislash.slash_command(description='Tag commands')
     async def tag(self, inter: SlashInteraction):
         pass
 
@@ -23,8 +23,8 @@ class Slash(commands.Cog):
         else:
             await ctx.send('Tag not found.')
     
-    @tag.sub_command(description='Shows tag content', options=[Option('name', 'Tag name', OptionType.STRING, True), Option('content', 'Tag content', OptionType.STRING, True)])
-    async def tag_create(self, ctx, name, content):
+    @tag.sub_command(description='Create tag', options=[Option('name', 'Tag name', OptionType.STRING, True), Option('content', 'Tag content', OptionType.STRING, True)])
+    async def create(self, ctx, name, content):
         try:
             if 0 < len(name) >= 3:
                 time = datetime.datetime.now()
@@ -35,6 +35,23 @@ class Slash(commands.Cog):
                 await ctx.send('To `little` characters, please use three or more.')
         except Exception:
             await ctx.send('This tag already exists.')
+
+    @tag.sub_command(description='Edit tag', options=[Option('name', 'Tag name', OptionType.STRING, True), Option('content', 'Tag content', OptionType.STRING, True)])
+    async def edit(self, ctx, tag, content):
+        data = await guild_get_tag(guild_id=ctx.guild.id, key=tag)
+        if data and data['item']:
+            owner = data['item'][0]['owner']
+            if f'{ctx.author.id}' == f'{owner}':
+                time = datetime.datetime.now()
+                await guild_edit_tag(guild_id=ctx.guild.id, item=[
+                    {"owner": f'{ctx.author.id}', "name": tag, "content": content,
+                     "created_at": f'{time.day}/{time.month}/{time.year}'}], key=tag)
+                await ctx.send(f'Tag `{tag}` successfully edited.')
+            else:
+                await ctx.send('You don\'t own this tag.', view=None)
+        else:
+            await ctx.send('Tag not found.')
+
     
 
 
