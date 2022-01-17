@@ -89,8 +89,8 @@ class Guild(commands.Cog):
         else:
             await ctx.send('Tag not found.')
 
-    @tag.command(name='search')
-    async def tag_search(self, ctx):
+    @tag.command(name='all')
+    async def tag_all(self, ctx):
         await ctx.send('Placeholder')
 
     @commands.command(name='tags')
