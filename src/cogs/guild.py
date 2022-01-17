@@ -77,8 +77,8 @@ class Guild(commands.Cog):
         await ctx.send(embed=embed)
 
     @tag.command(name='info')
-    async def tag_info(self, ctx, tag):
-        data = await guild_get_tag(guild_id=ctx.guild.id, key=tag)
+    async def tag_info(self, ctx, name):
+        data = await guild_get_tag(guild_id=ctx.guild.id, key=name)
         if data and data['item']:
             info = data['item'][0]
             em = discord.Embed(title=info['name'], colour=0xffffff)
