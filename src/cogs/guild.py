@@ -91,7 +91,8 @@ class Guild(commands.Cog):
 
     @tag.command(name='all')
     async def tag_all(self, ctx):
-        await ctx.send('Placeholder')
+        for user in ctx.guild.members:
+            await ctx.send(user)
 
     @commands.command(name='tags')
     async def user_tags(self, ctx, user: discord.User=None):
