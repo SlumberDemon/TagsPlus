@@ -1,6 +1,7 @@
 import discord
 from os import getenv
 from discord.ext import commands
+from dislash import InteractionClient
 
 
 # Intents
@@ -16,6 +17,10 @@ class Tags(commands.Bot):
             command_prefix='+',
             intents=intent,
             case_insensitive=True,
+        )
+        inter_client = InteractionClient(
+            self, 
+            modify_send=False
         )
 
     async def on_ready(self):

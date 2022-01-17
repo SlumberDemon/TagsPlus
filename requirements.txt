@@ -1,2 +1,3 @@
 git+https://github.com/Rapptz/discord.py
 deta==1.0.1
+dislash.py==1.4.9
