@@ -73,6 +73,14 @@ class Slash(commands.Cog):
         else:
             await ctx.send('Tag not found.', view=None)
 
+    @tag.sub_command(description='Raw tag', options=[Option('name', 'Tag name', OptionType.STRING, True)])
+    async def raw(self, ctx, name):
+        tag = await guild_get_tag(guild_id=ctx.guild.id, key=name)
+        first_step = discord.utils.escape_markdown(tag['item'][0]['content'])
+        data = (first_step.replace('<', '\\<'))
+        embed = discord.Embed(description=f'\n{data}', colour=0xffffff)
+        await ctx.send(embed=embed)
+
 
 def setup(bot):
     bot.add_cog(Slash(bot))
