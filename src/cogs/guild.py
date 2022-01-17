@@ -91,9 +91,8 @@ class Guild(commands.Cog):
             await ctx.send('Tag not found.')
 
     @tag.command(name='search')
-    async def tag_search(self, ctx, query):
-        data = await find_tags(self, query)
-        await ctx.send(data)
+    async def tag_search(self, ctx):
+        await ctx.send('Placeholder')
 
     @commands.command(name='tags')
     async def user_tags(self, ctx, user: discord.User=None):
