@@ -40,7 +40,7 @@ class Slash(commands.Cog):
     async def edit(self, ctx, tag, content):
         data = await guild_get_tag(guild_id=ctx.guild.id, key=tag)
         if data and data['item']:
-            owner = data['item'][0]['owner']
+            owner = data['owner']
             if f'{ctx.author.id}' == f'{owner}':
                 time = datetime.datetime.now()
                 await guild_edit_tag(guild_id=ctx.guild.id, item=[
