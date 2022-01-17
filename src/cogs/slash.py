@@ -1,6 +1,6 @@
 import discord 
 import dislash 
-import datatime
+import datetime
 from src.extras.func import *
 from src.extras.views import *
 from discord.ext import commands
