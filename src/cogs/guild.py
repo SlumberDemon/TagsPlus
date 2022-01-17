@@ -35,7 +35,7 @@ class Guild(commands.Cog):
     async def edit(self, ctx, name, *, content: str):
         data = await guild_get_tag(guild_id=ctx.guild.id, key=name)
         if data and data['item']:
-            owner = data['owner']
+            owner = data['item'][0]['owner']
             if f'{ctx.author.id}' == f'{owner}':
                 time = datetime.datetime.now()
                 await guild_edit_tag(guild_id=ctx.guild.id, item=[
