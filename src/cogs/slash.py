@@ -73,7 +73,7 @@ class Slash(commands.Cog):
         else:
             await ctx.send('Tag not found.', view=None)
 
-    @tag.sub_command(description='Raw tag', options=[Option('name', 'Tag name', OptionType.STRING, True)])
+    @tag.sub_command(description='Tag raw', options=[Option('name', 'Tag name', OptionType.STRING, True)])
     async def raw(self, ctx, name):
         tag = await guild_get_tag(guild_id=ctx.guild.id, key=name)
         first_step = discord.utils.escape_markdown(tag['item'][0]['content'])
@@ -81,6 +81,44 @@ class Slash(commands.Cog):
         embed = discord.Embed(description=f'\n{data}', colour=0xffffff)
         await ctx.send(embed=embed)
 
+    @tag.sub_command(description='Tag info', options=[Option('name', 'Tag name', OptionType.STRING, True)])
+    async def info(self, ctx, name):
+        data = await guild_get_tag(guild_id=ctx.guild.id, key=name)
+        if data and data['item']:
+            info = data['item'][0]
+            em = discord.Embed(title=info['name'], colour=0xffffff)
+            em.add_field(name='Content', value=info['content'], inline=False)
+            em.add_field(name='Owner', value='<@' + info['owner'] + '>', inline=True)
+            em.add_field(name='Created at', value=info['created_at'], inline=True)
+            await ctx.send(embed=em)
+        else:
+            await ctx.send('Tag not found.')
+        
+    @tag.sub_command(description='All tags')
+    async def all(self, ctx):
+        tags = ''
+        for user in ctx.guild.members:
+            data = await guild_fetch_user(guild_id=ctx.guild.id, owner=f'{user.id}')
+            if data.items:
+                for item in data.items:
+                    tags+=' ' + item['key'] + ' (id:' + item['owner'] + ')' + '\n'
+            else:
+                pass
+        em = discord.Embed(description=tags, colour=0xffffff)
+        em.set_author(name='Guild Tag(s)', icon_url=ctx.guild.icon.url)
+        await ctx.send(embed=em)
+        
+    @slash_command(description='User tags', options=[Option('user', 'Tag owner', OptionType.USER, True)])
+    async def tags(self, ctx, user):
+        user = ctx.author if not user else user
+        data = await guild_fetch_user(guild_id=ctx.guild.id, owner=f'{user.id}')
+        tags = ''
+        for item in data.items:
+            tags+=' ' + item['key'] + ' \n'
+        em = discord.Embed(description=tags, colour=0xffffff)
+        em.set_author(name=user.display_name, icon_url=user.avatar.url)
+        em.set_footer(text=f'{data.count} Tag(s)')
+        await ctx.send(embed=em)
 
 def setup(bot):
     bot.add_cog(Slash(bot))
