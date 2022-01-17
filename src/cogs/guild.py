@@ -32,16 +32,16 @@ class Guild(commands.Cog):
             await ctx.send('This tag already exists.')
 
     @tag.command(name='edit')
-    async def tag_edit(self, ctx, tag, *, content: str):
-        data = await guild_get_tag(guild_id=ctx.guild.id, key=tag)
+    async def edit(self, ctx, name, *, content: str):
+        data = await guild_get_tag(guild_id=ctx.guild.id, key=name)
         if data and data['item']:
-            owner = data['item'][0]['owner']
+            owner = data['owner']
             if f'{ctx.author.id}' == f'{owner}':
                 time = datetime.datetime.now()
                 await guild_edit_tag(guild_id=ctx.guild.id, item=[
-                    {"owner": f'{ctx.author.id}', "name": tag, "content": content,
-                     "created_at": f'{time.day}/{time.month}/{time.year}'}], key=tag)
-                await ctx.send(f'Tag `{tag}` successfully edited.')
+                    {"owner": f'{ctx.author.id}', "name": name, "content": content,
+                     "created_at": f'{time.day}/{time.month}/{time.year}'}], key=name)
+                await ctx.send(f'Tag `{name}` successfully edited.')
             else:
                 await ctx.send('You don\'t own this tag.', view=None)
         else:
