@@ -96,13 +96,11 @@ class Guild(commands.Cog):
             data = await guild_fetch_user(guild_id=ctx.guild.id, owner=f'{user.id}')
             if data.items:
                 tags = ''
-                num = ''
                 for item in data.items:
                     tags+=' ' + item['key'] + ' \n'
-                    num+=data.count
                 em = discord.Embed(description=tags, colour=0xffffff)
                 em.set_author(name='All', icon_url=user.avatar.url)
-                em.set_footer(text=f'{num} Tag(s)')
+                em.set_footer(text=f'{data.count} Tag(s)')
             else:
                 pass
 
