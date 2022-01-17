@@ -94,8 +94,8 @@ class Guild(commands.Cog):
     async def tag_all(self, ctx):
         for user in ctx.guild.members:
             data = await guild_fetch_user(guild_id=ctx.guild.id, owner=f'{user.id}')
+            tags = ''
             if data.items:
-                tags = ''
                 for item in data.items:
                     tags+=' ' + item['key'] + ' \n'
             else:
