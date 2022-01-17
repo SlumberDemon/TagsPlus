@@ -92,6 +92,7 @@ class Guild(commands.Cog):
 
     @tag.command(name='all')
     async def tag_all(self, ctx):
+        tags = ''
         for user in ctx.guild.members:
             data = await guild_fetch_user(guild_id=ctx.guild.id, owner=f'{user.id}')
             tags = ''
@@ -100,9 +101,9 @@ class Guild(commands.Cog):
                     tags+=' ' + item['key'] + ' \n'
             else:
                 pass
-            em = discord.Embed(description=tags, colour=0xffffff)
-            em.set_author(name='All', icon_url=ctx.author.avatar.url)
-            await ctx.send(embed=em)
+        em = discord.Embed(description=tags, colour=0xffffff)
+        em.set_author(name='All', icon_url=ctx.author.avatar.url)
+        await ctx.send(embed=em)
 
     @commands.command(name='tags')
     async def user_tags(self, ctx, user: discord.User=None):
