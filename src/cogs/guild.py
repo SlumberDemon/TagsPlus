@@ -1,4 +1,3 @@
-from itertools import count
 import discord
 import datetime
 from src.extras.func import *
@@ -20,7 +19,7 @@ class Guild(commands.Cog):
             await ctx.send('Tag not found.')
 
     @tag.command(name='create')
-    async def tag_create(self, ctx, name, *, content: str = None):
+    async def tag_create(self, ctx, name, *, content: str):
         try:
             if 0 < len(name) >= 3:
                 time = datetime.datetime.now()
