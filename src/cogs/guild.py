@@ -95,7 +95,6 @@ class Guild(commands.Cog):
         tags = ''
         for user in ctx.guild.members:
             data = await guild_fetch_user(guild_id=ctx.guild.id, owner=f'{user.id}')
-            tags = ''
             if data.items:
                 for item in data.items:
                     tags+=' ' + item['key'] + ' \n'
