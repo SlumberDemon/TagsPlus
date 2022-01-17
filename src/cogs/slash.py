@@ -76,10 +76,13 @@ class Slash(commands.Cog):
     @tag.sub_command(description='Tag raw', options=[Option('name', 'Tag name', OptionType.STRING, True)])
     async def raw(self, ctx, name):
         tag = await guild_get_tag(guild_id=ctx.guild.id, key=name)
-        first_step = discord.utils.escape_markdown(tag['item'][0]['content'])
-        data = (first_step.replace('<', '\\<'))
-        embed = discord.Embed(description=f'\n{data}', colour=0xffffff)
-        await ctx.send(embed=embed)
+        if tag:
+            first_step = discord.utils.escape_markdown(tag['item'][0]['content'])
+            data = (first_step.replace('<', '\\<'))
+            embed = discord.Embed(description=f'\n{data}', colour=0xffffff)
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send('Tag not found.')
 
     @tag.sub_command(description='Tag info', options=[Option('name', 'Tag name', OptionType.STRING, True)])
     async def info(self, ctx, name):
