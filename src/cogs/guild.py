@@ -99,8 +99,7 @@ class Guild(commands.Cog):
                 for item in data.items:
                     tags+=' ' + item['key'] + ' \n'
                 em = discord.Embed(description=tags, colour=0xffffff)
-                em.set_author(name='All', icon_url=user.avatar.url)
-                em.set_footer(text=f'{data.count} Tag(s)')
+                em.set_author(name='All', icon_url=ctx.author.avatar.url)
             else:
                 pass
 
@@ -112,8 +111,8 @@ class Guild(commands.Cog):
         for item in data.items:
             tags+=' ' + item['key'] + ' \n'
         em = discord.Embed(description=tags, colour=0xffffff)
-        em.set_author(name='All Tags', icon_url=ctx.author.avatar.url)
-        em.set_footer(text=f'Tag(s)')
+        em.set_author(name=user.display_name, icon_url=user.avatar.url)
+        em.set_footer(text=f'{data.count} Tag(s)')
         await ctx.send(embed=em)
 
 def setup(bot):
