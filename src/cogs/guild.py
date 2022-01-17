@@ -1,6 +1,7 @@
 import discord
 import datetime
 from src.extras.func import *
+from src.extras.func import find_tags
 from src.extras.views import *
 from discord.ext import commands
 
@@ -90,8 +91,8 @@ class Guild(commands.Cog):
             await ctx.send('Tag not found.')
 
     @tag.command(name='search')
-    async def tag_search(self, ctx, tag):
-        data = await guild_fetch_tag(guild_id=ctx.guild.id, key=tag)
+    async def tag_search(self, ctx, query):
+        data = await find_tags(query)
         await ctx.send(data)
 
     @commands.command(name='tags')
