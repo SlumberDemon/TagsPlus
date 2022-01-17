@@ -98,9 +98,9 @@ class Guild(commands.Cog):
                 tags = ''
                 for item in data.items:
                     tags+=' ' + item['key'] + ' \n'
-                em = discord.Embed(description=tags, colour=0xffffff)
-                em.set_author(name='All', icon_url=ctx.author.avatar.url)
-                await ctx.send(embed=em)
+            em = discord.Embed(description=tags, colour=0xffffff)
+            em.set_author(name='All', icon_url=ctx.author.avatar.url)
+            await ctx.send(embed=em)
             else:
                 pass
 
