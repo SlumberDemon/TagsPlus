@@ -92,7 +92,7 @@ class Guild(commands.Cog):
     @tag.command(name='all')
     async def tag_all(self, ctx):
         for user in ctx.guild.members:
-            await ctx.send(user)
+            await ctx.send(user.id)
 
     @commands.command(name='tags')
     async def user_tags(self, ctx, user: discord.User=None):
