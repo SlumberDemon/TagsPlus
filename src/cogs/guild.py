@@ -97,7 +97,7 @@ class Guild(commands.Cog):
             data = await guild_fetch_user(guild_id=ctx.guild.id, owner=f'{user.id}')
             if data.items:
                 for item in data.items:
-                    tags+=' ' + item['key'] + ' \n'
+                    tags+=' ' + item['key'] + '(id:' + item['owner'] + ')' + '\n'
             else:
                 pass
         em = discord.Embed(description=tags, colour=0xffffff)
