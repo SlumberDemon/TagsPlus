@@ -98,11 +98,11 @@ class Guild(commands.Cog):
                 tags = ''
                 for item in data.items:
                     tags+=' ' + item['key'] + ' \n'
+            else:
+                pass
             em = discord.Embed(description=tags, colour=0xffffff)
             em.set_author(name='All', icon_url=ctx.author.avatar.url)
             await ctx.send(embed=em)
-            else:
-                pass
 
     @commands.command(name='tags')
     async def user_tags(self, ctx, user: discord.User=None):
