@@ -7,7 +7,7 @@ the global tags)!
 
 [![Discord Bots](https://top.gg/api/widget/servers/823977552791339108.svg)](https://top.gg/bot/823977552791339108) - SlumberDemon
 
-![Discord Bots](https://top.gg/api/widget/servers/848304171814879273.svg) - jnsougata
+[![Discord Bots](https://top.gg/api/widget/servers/848304171814879273.svg)](https://top.gg/bot/848304171814879273) - jnsougata
 
 
 
