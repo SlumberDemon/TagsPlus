@@ -6,9 +6,9 @@ class Error(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    ''''
 
-    Single listenener 
+
+    # Single listenener 
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
@@ -25,6 +25,8 @@ class Error(commands.Cog):
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
         await ctx.send(f'```py' f'\n{error}' f'\n```')
+
+    '''
 
 def setup(bot):
     bot.add_cog(Error(bot))
