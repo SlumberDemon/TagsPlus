@@ -14,7 +14,7 @@ class Error(commands.Cog):
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.send(
-                'Please try again with `required` argument(s).',
+                'Please try again with the `required` argument(s).',
                 delete_after=10, 
             )
 
