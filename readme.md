@@ -1,9 +1,9 @@
-__Tags+ Discord bot__
+## Tags+ Discord bot
 
 Easily create and share tags. Tags+ helps you create server tags and also allows you to share Tags with other servers. Join the Tags+ Network by creating a tag (in 
 the global tags)!
 
-__Other projects from creators__
+## Other projects from creators
 
 ![Discord Bots](https://top.gg/api/widget/servers/823977552791339108.svg) - SlumberDemon
 
