@@ -6,6 +6,7 @@ the global tags)!
 __Other projects from creators__
 
 ![Discord Bots](https://top.gg/api/widget/servers/823977552791339108.svg) - SlumberDemon
+
 ![Discord Bots](https://top.gg/api/widget/servers/848304171814879273.svg) - jnsougata
 
 
