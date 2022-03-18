@@ -22,6 +22,11 @@ class Tags(commands.Bot):
             self, 
             modify_send=False
         )
+        self.initial_extensions = [
+            'cogs.guild',
+            'cogs.global',
+            'cogs.slash',
+        ]
 
     async def on_ready(self):
         print(f'Logged in as {self.user} (ID: {self.user.id})')
@@ -29,18 +34,6 @@ class Tags(commands.Bot):
 
 
 tags = Tags()
-
-# Cogs
-
-modules = [
-    "guild",
-    "global",
-#    "error",
-    "slash"
-]
-
-for module in modules:
-    tags.load_extension("cogs." + module)
 
 # Run
 
