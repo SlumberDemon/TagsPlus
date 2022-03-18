@@ -2,7 +2,7 @@ import discord
 import datetime
 from discord.ext import commands
 from src.extras.views import Confirm
-from src.extras.func import guild_create_tag, guild_fetch_user, guild_get_tag, guild_edit_tag, guild_delete_tag
+from src.extras.func import guild_create_tag, guild_fetch_user, guild_get_tag_id, guild_edit_tag, guild_delete_tag, guild_get_tag_name
 
 
 class Guild(commands.Cog):
@@ -12,7 +12,10 @@ class Guild(commands.Cog):
 
     @commands.group(name='tag', invoke_without_command=True)
     async def tag(self, ctx, tag):
-        data = await guild_get_tag(guild_id=ctx.guild.id, key=tag)
+        try:
+            data = await guild_get_tag_name(guild_id=ctx.guild.id, name=tag)
+        except:
+            data = await guild_get_tag_id(guild_id=ctx.guild.id, key=tag)
         if data:
             await ctx.send(data['item'][0]['content'])
         else:
@@ -34,7 +37,10 @@ class Guild(commands.Cog):
 
     @tag.command(name='edit')
     async def edit(self, ctx, name, *, content: str):
-        data = await guild_get_tag(guild_id=ctx.guild.id, key=name)
+        try:
+            data = await guild_get_tag_name(guild_id=ctx.guild.id, name=name)
+        except:
+            data = await guild_get_tag_id(guild_id=ctx.guild.id, key=name)
         if data and data['item']:
             owner = data['item'][0]['owner']
             if f'{ctx.author.id}' == f'{owner}':
@@ -49,19 +55,22 @@ class Guild(commands.Cog):
             await ctx.send('Tag not found.')
 
     @tag.command(name='delete')
-    async def tag_delete(self, ctx, name):
-        data = await guild_get_tag(guild_id=ctx.guild.id, key=name)
+    async def tag_delete(self, ctx, tag):
+        try:
+            data = await guild_get_tag_name(guild_id=ctx.guild.id, name=tag)
+        except:
+            data = await guild_get_tag_id(guild_id=ctx.guild.id, key=tag)
         if data and data['item']:
             owner = data['item'][0]['owner']
             view = Confirm(ctx)
-            msg = await ctx.send(f'Want to delete `{name}` tag?', view=view)
+            msg = await ctx.send(f'Want to delete `{tag}` tag?', view=view)
             await view.wait()
             if view.value is None:
                 await msg.edit('Tag deletion timed out.')
             elif view.value:
                 if f'{ctx.author.id}' == f'{owner}':
-                    await guild_delete_tag(guild_id=ctx.guild.id, key=name)
-                    await msg.edit(f'Tag `{name}` successfully deleted.', view=None)
+                    await guild_delete_tag(guild_id=ctx.guild.id, key=tag)
+                    await msg.edit(f'Tag `{tag}` successfully deleted.', view=None)
                 else:
                     await msg.edit('You don\'t own this tag.', view=None)
             else:
@@ -70,8 +79,11 @@ class Guild(commands.Cog):
             await ctx.send('Tag not found.', view=None)
 
     @tag.command(name='raw')
-    async def tag_raw(self, ctx, name):
-        tag = await guild_get_tag(guild_id=ctx.guild.id, key=name)
+    async def tag_raw(self, ctx, tag):
+        try:
+            data = await guild_get_tag_name(guild_id=ctx.guild.id, name=tag)
+        except:
+            data = await guild_get_tag_id(guild_id=ctx.guild.id, key=tag)
         if tag:
             first_step = discord.utils.escape_markdown(tag['item'][0]['content'])
             data = (first_step.replace('<', '\\<'))
@@ -81,8 +93,11 @@ class Guild(commands.Cog):
             await ctx.send('Tag not found.')
 
     @tag.command(name='info')
-    async def tag_info(self, ctx, name):
-        data = await guild_get_tag(guild_id=ctx.guild.id, key=name)
+    async def tag_info(self, ctx, tag):
+        try:
+            data = await guild_get_tag_name(guild_id=ctx.guild.id, name=tag)
+        except:
+            data = await guild_get_tag_id(guild_id=ctx.guild.id, key=tag)
         if data and data['item']:
             info = data['item'][0]
             em = discord.Embed(title=info['name'], colour=0xffffff)
@@ -100,7 +115,7 @@ class Guild(commands.Cog):
             data = await guild_fetch_user(guild_id=ctx.guild.id, owner=f'{user.id}')
             if data.items:
                 for item in data.items:
-                    tags+=' ' + item['key'] + ' (id:' + item['owner'] + ')' + '\n'
+                    tags+=' ' + item['name'] + ' (id:' + item['key'] + ')' + '\n'
             else:
                 pass
         em = discord.Embed(description=tags, colour=0xffffff)
