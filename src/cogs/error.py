@@ -10,6 +10,8 @@ class Error(commands.Cog):
 
     # Single listenener 
 
+    ''''
+
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
@@ -26,7 +28,6 @@ class Error(commands.Cog):
     async def on_command_error(self, ctx, error):
         await ctx.send(f'```py' f'\n{error}' f'\n```')
 
-    '''
 
 def setup(bot):
     bot.add_cog(Error(bot))
