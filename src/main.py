@@ -32,15 +32,15 @@ tags = Tags()
 
 # Cogs
 
-cogs = [
+modules = [
     "guild",
     "global",
 #    "error",
     "slash"
 ]
 
-for cog in cogs:
-    tags.load_extension("cogs." + cog)
+for module in modules:
+    tags.load_extension("cogs." + module)
 
 # Run
 
