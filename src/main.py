@@ -35,7 +35,7 @@ tags = Tags()
 cogs = [
     "guild",
     "global",
-    "error",
+#    "error",
     "slash"
 ]
 
