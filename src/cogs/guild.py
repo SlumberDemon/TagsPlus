@@ -1,8 +1,8 @@
 import discord
 import datetime
-from src.extras.func import *
-from src.extras.views import *
 from discord.ext import commands
+from src.extras.views import Confirm
+from src.extras.func import guild_create_tag, guild_fetch_user, guild_get_tag, guild_edit_tag, guild_delete_tag
 
 
 class Guild(commands.Cog):
@@ -24,7 +24,8 @@ class Guild(commands.Cog):
             if 0 < len(name) >= 3:
                 time = datetime.datetime.now()
                 owner = f'{ctx.author.id}'
-                await guild_create_tag(guild_id=ctx.guild.id, item=[{"owner": owner, "name": name, "content": content, "created_at": f'{time.day}/{time.month}/{time.year}'}], owner=owner, key=name)
+                user = name.replace(' ', '_')
+                await guild_create_tag(guild_id=ctx.guild.id, item=[{"owner": owner, "name": user, "content": content, "created_at": f'{time.day}/{time.month}/{time.year}'}], owner=owner, key=name)
                 await ctx.send(f'Tag `{name}` successfully created.')
             else:
                 await ctx.send('To `little` characters, please use three or more.')
