@@ -34,6 +34,7 @@ class Tags(commands.Bot):
         self.session = aiohttp.ClientSession()
         for ext in self.initial_extensions:
             await self.load_extension(ext)
+            print(f'- Cog {ext} loaded -')
 
     async def close(self):
         await super().close()
