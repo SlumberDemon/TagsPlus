@@ -40,6 +40,7 @@ cogs = [
 
 for cog in cogs:
     tags.load_extension("cogs." + cog)
+    print(f'- Loaded {cog} cog-')
 
 # Run
 
