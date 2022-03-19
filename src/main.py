@@ -1,5 +1,5 @@
+import os
 import discord
-from os import getenv
 from discord.ext import commands
 from dislash import InteractionClient
 
@@ -12,36 +12,24 @@ intent.members = True
 
 
 class Tags(commands.Bot):
+
+    __dirs__ = os.listdir('src/cogs')
+
     def __init__(self):
-        super().__init__(
-            command_prefix='+',
-            intents=intent,
-            case_insensitive=True
-        )
-        inter_client = InteractionClient(
-            self, 
-            modify_send=False
-        )
+        super().__init__(intents=intent, help_command=None, command_prefix='+')
+        self.init_ext = ['bot.cogs.' + file[:-3] for file in self.__dirs__ if file.endswith('.py')]
 
     async def on_ready(self):
         print(f'Logged in as {self.user} (ID: {self.user.id})')
         print('------')
 
+    async def setup_hook(self) -> None:
+        for ext in self.init_ext:
+            await self.load_extension(ext)
+
 
 tags = Tags()
 
-# Cogs
-
-cogs = [
-    "guild",
-    "global",
-    "slash"
-]
-
-for cog in cogs:
-    tags.load_extension("cogs." + cog)
-    print(f'- Loaded {cog} cog-')
-
 # Run
 
-tags.run(getenv('TOKEN'))
+tags.run(os.getenv('TOKEN'))
