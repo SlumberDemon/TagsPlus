@@ -1,5 +1,4 @@
 import discord
-import aiohttp
 from os import getenv
 from discord.ext import commands
 from dislash import InteractionClient
@@ -29,16 +28,10 @@ class Tags(commands.Bot):
             'cogs.slash',
         ]
 
-    async def setup_hook(self):
-        self.background_task.start()
-        self.session = aiohttp.ClientSession()
+    async def setup(self):
         for ext in self.initial_extensions:
             await self.load_extension(ext)
             print(f'- Cog {ext} loaded -')
-
-    async def close(self):
-        await super().close()
-        await self.session.close()
 
     async def on_ready(self):
         print(f'Logged in as {self.user} (ID: {self.user.id})')
