@@ -16,22 +16,12 @@ class Tags(commands.Bot):
         super().__init__(
             command_prefix='+',
             intents=intent,
-            case_insensitive=True,
+            case_insensitive=True
         )
         inter_client = InteractionClient(
             self, 
             modify_send=False
         )
-        self.initial_extensions = [
-            'cogs.guild',
-            'cogs.global',
-            'cogs.slash',
-        ]
-
-    async def setup(self):
-        for ext in self.initial_extensions:
-            await self.load_extension(ext)
-            print(f'- Cog {ext} loaded -')
 
     async def on_ready(self):
         print(f'Logged in as {self.user} (ID: {self.user.id})')
@@ -39,6 +29,17 @@ class Tags(commands.Bot):
 
 
 tags = Tags()
+
+# Cogs
+
+cogs = [
+    "guild",
+    "global",
+    "slash"
+]
+
+for cog in cogs:
+    tags.load_extension("cogs." + cog)
 
 # Run
 
