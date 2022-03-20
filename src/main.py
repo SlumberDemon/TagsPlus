@@ -17,7 +17,7 @@ class Tags(commands.Bot):
 
     def __init__(self):
         super().__init__(intents=intent, command_prefix='+')
-        self.init_ext = ['bot.cogs.' + file[:-3] for file in self.__dirs__ if file.endswith('.py')]
+        self.init_ext = ['cogs.' + file[:-3] for file in self.__dirs__ if file.endswith('.py')]
         inter_client = InteractionClient(
             self, 
             modify_send=False
