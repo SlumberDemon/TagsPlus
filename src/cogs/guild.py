@@ -135,4 +135,4 @@ class Guild(commands.Cog):
         await ctx.send(embed=em)
 
 async def setup(bot):
-    bot.add_cog(Guild(bot))
+    await bot.add_cog(Guild(bot))

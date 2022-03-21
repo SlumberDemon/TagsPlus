@@ -124,6 +124,6 @@ class Slash(commands.Cog):
         await ctx.send(embed=em)
 
 async def setup(bot):
-    bot.add_cog(Slash(bot))
+    await bot.add_cog(Slash(bot))
 
 
