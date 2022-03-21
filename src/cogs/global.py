@@ -97,4 +97,4 @@ class Global(commands.Cog):
 
 
 async def setup(bot: discord.Client):
-    await bot.add_cog(Global(bot))
+    bot.add_cog(Global(bot))
