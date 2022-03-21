@@ -96,5 +96,5 @@ class Global(commands.Cog):
             await ctx.send('No results found.')
 
 
-def setup(bot: discord.Client):
+async def setup(bot: discord.Client):
     bot.add_cog(Global(bot))

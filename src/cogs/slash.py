@@ -123,7 +123,7 @@ class Slash(commands.Cog):
         em.set_footer(text=f'{data.count} Tag(s)')
         await ctx.send(embed=em)
 
-def setup(bot):
+async def setup(bot):
     bot.add_cog(Slash(bot))
 
 
