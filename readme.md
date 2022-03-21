@@ -4,8 +4,8 @@ Easily create and share tags. Tags+ helps you create server tags and also allows
 the global tags)!
 
 ## Todo
-[] - Re-add slash commands
-[] - Re-write storing and laoding of tags
+- Re-add slash commands
+- Re-write storing and laoding of tags
 
 ## Other projects from the creators
 
