@@ -15,7 +15,8 @@ class Guild(commands.Cog):
         data = await guild_get_tag_name(guild_id=ctx.guild.id, name=tag)
         data1 = await guild_get_tag_id(guild_id=ctx.guild.id, key=tag)
         try:
-            await ctx.send(data.items['item'][0]['key'])
+            for item in data.items:
+                await ctx.send(data['item'][0]['name'])
         except:
             await ctx.send('- - -')
         try:   
