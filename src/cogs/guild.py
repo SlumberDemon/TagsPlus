@@ -2,7 +2,7 @@ import discord
 import datetime
 from discord.ext import commands
 from src.extras.views import Confirm
-from src.extras.func import guild_create_tag, guild_fetch_user, guild_get_tag_id, guild_edit_tag, guild_delete_tag, guild_get_tag_name, guild_get_tag
+from src.extras.func import guild_create_tag, guild_fetch_user, guild_edit_tag, guild_delete_tag, guild_get_tag_content, guild_get_tag
 
 
 class Guild(commands.Cog):
@@ -12,7 +12,7 @@ class Guild(commands.Cog):
 
     @commands.group(name='tag', invoke_without_command=True)
     async def tag(self, ctx, tag):
-        data = await guild_get_tag(guild_id=ctx.guild.id, tag=tag)
+        data = await guild_get_tag_content(guild_id=ctx.guild.id, tag=tag)
         await ctx.send(data)
 
     @tag.command(name='create')
@@ -27,14 +27,11 @@ class Guild(commands.Cog):
             else:
                 await ctx.send('To `little` characters, please use three or more.')
         except Exception:
-            await ctx.send('This tag already exists.')
+            await ctx.send('This tag already exists or you are using a tag ID as a name.')
 
     @tag.command(name='edit')
     async def edit(self, ctx, name, *, content: str):
-        try:
-            data = await guild_get_tag_name(guild_id=ctx.guild.id, name=name)
-        except:
-            data = await guild_get_tag_id(guild_id=ctx.guild.id, key=name)
+        data = await guild_get_tag(guild_id=ctx.guild.id, tag=name)
         if data and data['item']:
             owner = data['item'][0]['owner']
             if f'{ctx.author.id}' == f'{owner}':
@@ -50,10 +47,7 @@ class Guild(commands.Cog):
 
     @tag.command(name='delete')
     async def tag_delete(self, ctx, tag):
-        try:
-            data = await guild_get_tag_name(guild_id=ctx.guild.id, name=tag)
-        except:
-            data = await guild_get_tag_id(guild_id=ctx.guild.id, key=tag)
+        data = await guild_get_tag(guild_id=ctx.guild.id, tag=tag)
         if data and data['item']:
             owner = data['item'][0]['owner']
             view = Confirm(ctx)
@@ -74,10 +68,7 @@ class Guild(commands.Cog):
 
     @tag.command(name='raw')
     async def tag_raw(self, ctx, tag):
-        try:
-            data = await guild_get_tag_name(guild_id=ctx.guild.id, name=tag)
-        except:
-            data = await guild_get_tag_id(guild_id=ctx.guild.id, key=tag)
+        data = await guild_get_tag(guild_id=ctx.guild.id, tag=tag)
         if tag:
             first_step = discord.utils.escape_markdown(tag['item'][0]['content'])
             data = (first_step.replace('<', '\\<'))
@@ -88,10 +79,7 @@ class Guild(commands.Cog):
 
     @tag.command(name='info')
     async def tag_info(self, ctx, tag):
-        try:
-            data = await guild_get_tag_name(guild_id=ctx.guild.id, name=tag)
-        except:
-            data = await guild_get_tag_id(guild_id=ctx.guild.id, key=tag)
+        data = await guild_get_tag(guild_id=ctx.guild.id, tag=tag)
         if data and data['item']:
             info = data['item'][0]
             em = discord.Embed(title=info['name'], colour=0xffffff)
