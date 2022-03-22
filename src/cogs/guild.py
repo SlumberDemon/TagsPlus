@@ -12,8 +12,14 @@ class Guild(commands.Cog):
 
     @commands.group(name='tag', invoke_without_command=True)
     async def tag(self, ctx, tag):
-        data = await guild_get_tag_name(guild_id=ctx.guild.id, name=tag)
-        await ctx.send(data.items)
+        try:
+            data = await guild_get_tag_name(guild_id=ctx.guild.id, name=tag)
+        except:
+            data = await guild_get_tag_id(guild_id=ctx.guild.id, key=tag)
+        if data:
+            await ctx.send(data['item'][0]['content'])
+        else:
+            await ctx.send('Tag not found.')
 
     @tag.command(name='create')
     async def tag_create(self, ctx, name, *, content: str):
@@ -122,7 +128,7 @@ class Guild(commands.Cog):
         data = await guild_fetch_user(guild_id=ctx.guild.id, owner=f'{user.id}')
         tags = ''
         for item in data.items:
-            tags+=' ' + item['key'] + ' \n'
+            tags+=' ' + item['name'] + '(ID:' + item['key'] + ') \n'
         em = discord.Embed(description=tags, colour=0xffffff)
         em.set_author(name=user.display_name, icon_url=user.avatar.url)
         em.set_footer(text=f'{data.count} Tag(s)')
