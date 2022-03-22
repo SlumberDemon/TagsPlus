@@ -13,7 +13,7 @@ class Guild(commands.Cog):
     @commands.group(name='tag', invoke_without_command=True)
     async def tag(self, ctx, tag):
         data = await guild_get_tag_name(guild_id=ctx.guild.id, name=tag)
-        await ctx.send(data)
+        await ctx.send(data.items)
 
     @tag.command(name='create')
     async def tag_create(self, ctx, name, *, content: str):
