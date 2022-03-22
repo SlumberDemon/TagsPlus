@@ -14,9 +14,14 @@ class Guild(commands.Cog):
     async def tag(self, ctx, tag):
         data = await guild_get_tag_name(guild_id=ctx.guild.id, name=tag)
         data1 = await guild_get_tag_id(guild_id=ctx.guild.id, key=tag)
-        await ctx.send(data.items['item'][0]['key'])
-        await ctx.send('- - -')
-        await ctx.send(data1['item'][0]['name'])
+        try:
+            await ctx.send(data.items['item'][0]['key'])
+        except:
+            await ctx.send('- - -')
+        try:   
+            await ctx.send(data1['item'][0]['name'])
+        except:
+            await ctx.send('- - -')
 
     @tag.command(name='create')
     async def tag_create(self, ctx, name, *, content: str):
