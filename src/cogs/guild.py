@@ -15,6 +15,7 @@ class Guild(commands.Cog):
         data = await guild_get_tag_name(guild_id=ctx.guild.id, name=tag)
         data1 = await guild_get_tag_id(guild_id=ctx.guild.id, key=tag)
         await ctx.send(data.items)
+        await ctx.send('- - -')
         await ctx.send(data1)
 
     @tag.command(name='create')
