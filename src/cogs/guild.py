@@ -128,7 +128,7 @@ class Guild(commands.Cog):
         data = await guild_fetch_user(guild_id=ctx.guild.id, owner=f'{user.id}')
         tags = ''
         for item in data.items:
-            tags+=' ' + item['name'] + '(ID:' + item['key'] + ') \n'
+            tags+=' ' + item['name'] + ' (ID:' + item['key'] + ') \n'
         em = discord.Embed(description=tags, colour=0xffffff)
         em.set_author(name=user.display_name, icon_url=user.avatar.url)
         em.set_footer(text=f'{data.count} Tag(s)')
