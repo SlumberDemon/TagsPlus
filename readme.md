@@ -6,6 +6,7 @@ the global tags)!
 ## Todo
 - Re-add slash commands
 - Re-write storing and laoding of tags
+- Fix cog loading error
 
 ## Other projects from the creators
 
