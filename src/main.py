@@ -4,8 +4,10 @@ from discord.ext import commands
 
 
 # Intents
+
 intent = discord.Intents.default()
 intent.members = True
+intent.messages = True
 
 # Setup
 
