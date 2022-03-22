@@ -7,6 +7,7 @@ the global tags)!
 - Re-add slash commands
 - Re-write storing and laoding of tags
 - Fix creating tags with the same name
+- Update Global tags to use a similar system like the guild tags
 
 ## Other projects from the creators
 
