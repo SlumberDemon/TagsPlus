@@ -14,8 +14,9 @@ async def guild_create_tag(guild_id: int, item: Union[list, dict], owner: str, n
     for info in data.items:
         check = info['item'][0]['name']
     if check == name:
-        return None
+        print('Test message')
     else:
+        print('Test message 1')
         db.insert({'item': item, 'owner': owner, 'name': name})
 
 
