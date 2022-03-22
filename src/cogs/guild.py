@@ -2,7 +2,7 @@ import discord
 import datetime
 from discord.ext import commands
 from src.extras.views import Confirm
-from src.extras.func import guild_create_tag, guild_fetch_user, guild_get_tag_id, guild_edit_tag, guild_delete_tag, guild_get_tag_name
+from src.extras.func import guild_create_tag, guild_fetch_user, guild_get_tag_id, guild_edit_tag, guild_delete_tag, guild_get_tag_name, guild_get_tag
 
 
 class Guild(commands.Cog):
@@ -12,17 +12,8 @@ class Guild(commands.Cog):
 
     @commands.group(name='tag', invoke_without_command=True)
     async def tag(self, ctx, tag):
-        data = await guild_get_tag_name(guild_id=ctx.guild.id, name=tag)
-        data1 = await guild_get_tag_id(guild_id=ctx.guild.id, key=tag)
-        try:
-            for item in data.items:
-                await ctx.send(item['item'][0]['name'])
-        except:
-            await ctx.send('- - -')
-        try:   
-            await ctx.send(data1['item'][0]['name'])
-        except:
-            await ctx.send('- - -')
+        data = await guild_get_tag(guild_id=ctx.guild.id, tag=tag)
+        await ctx.send(data)
 
     @tag.command(name='create')
     async def tag_create(self, ctx, name, *, content: str):
