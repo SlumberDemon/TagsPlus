@@ -12,14 +12,8 @@ class Guild(commands.Cog):
 
     @commands.group(name='tag', invoke_without_command=True)
     async def tag(self, ctx, tag):
-        try:
-            data = await guild_get_tag_name(guild_id=ctx.guild.id, name=tag)
-        except:
-            data = await guild_get_tag_id(guild_id=ctx.guild.id, key=tag)
-        if data:
-            await ctx.send(data['item'][0]['content'])
-        else:
-            await ctx.send('Tag not found.')
+        data = await guild_get_tag_name(guild_id=ctx.guild.id, name=tag)
+        await ctx.send(data)
 
     @tag.command(name='create')
     async def tag_create(self, ctx, name, *, content: str):
