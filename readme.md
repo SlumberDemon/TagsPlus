@@ -14,7 +14,7 @@ the global tags)!
 
 [![Discord Bots](https://top.gg/api/widget/servers/848304171814879273.svg)](https://top.gg/bot/848304171814879273) - jnsougata
 
-[![Discord Bots](https://top.gg/api/widget/servers/848304171814879273.svg)](https://top.gg/bot/860612939307810846) - tesco meal deal
+[![Discord Bots](https://top.gg/api/widget/servers/860612939307810846.svg)](https://top.gg/bot/860612939307810846) - tesco meal deal
 
 
 
