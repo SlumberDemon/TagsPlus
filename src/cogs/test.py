@@ -26,7 +26,7 @@ class Test(commands.Cog):
         await ctx.send(data['item'][0]['content'])
 
     @commands.command(name='test4')
-    async def datacreate(self, ctx, name, *, content: str):
+    async def datacreate(self, ctx, name: str, *, content: str):
         time = datetime.datetime.now()
         owner = f'{ctx.author.id}'
         tag_name = name.replace(' ', '_')
@@ -34,7 +34,7 @@ class Test(commands.Cog):
         await ctx.send(f'Tag `{name}` successfully created.')
 
     @commands.command(name='test5')
-    async def datacreatesingle(self, ctx, name, *, content: str):
+    async def datacreatesingle(self, ctx, name: str, *, content: str):
         owner = f'{ctx.author.id}'
         tag_name = name.replace(' ', '_')
         await guild_create_tag(guild_id=ctx.guild.id, item=['Item'], owner=owner, name=tag_name)
