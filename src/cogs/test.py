@@ -27,12 +27,12 @@ class Test(commands.Cog):
         await ctx.send(data['owner'])
         await ctx.send(data['key'])
 
-    @commands.command(name='test4')
+    @commands.command(name='test5')
     async def datacontent(self, ctx, tag):
         data = await guild_get_tag(guild_id=ctx.guild.id, tag=tag)
         await ctx.send(data['item'][0]['content'])
 
-    @commands.command(name='test4')
+    @commands.command(name='test6')
     async def datacreate(self, ctx, name, *, content: str):
         time = datetime.datetime.now()
         owner = f'{ctx.author.id}'
@@ -40,7 +40,7 @@ class Test(commands.Cog):
         await guild_create_tag(guild_id=ctx.guild.id, item=[{"owner": owner, "name": tag_name, "content": content, "created_at": f'{time.day}/{time.month}/{time.year}'}], owner=owner, name=tag_name)
         await ctx.send(f'Tag `{name}` successfully created.')
 
-    @commands.command(name='test5')
+    @commands.command(name='test7')
     async def datacreatesingle(self, ctx, name, *, content: str):
         owner = f'{ctx.author.id}'
         tag_name = name.replace(' ', '_')
