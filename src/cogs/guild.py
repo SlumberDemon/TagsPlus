@@ -22,10 +22,10 @@ class Guild(commands.Cog):
     async def tag_create(self, ctx, name, *, content: str):
         try:
             if 0 < len(name) >= 3:
-                time = datetime.datetime.now()
+                time = datetime.datetime.utcnow()
                 owner = f'{ctx.author.id}'
                 tag_name = name.replace(' ', '_')
-                await guild_create_tag(guild_id=ctx.guild.id, item=[{"owner": owner, "name": tag_name, "content": content, "created_at": f'{time.day}/{time.month}/{time.year}'}], owner=owner, name=tag_name)
+                await guild_create_tag(guild_id=ctx.guild.id, item=[{"owner": owner, "name": tag_name, "content": content, "created_at": time}], owner=owner, name=tag_name)
                 await ctx.send(f'Tag `{name}` successfully created.')
             else:
                 await ctx.send('To `little` characters, please use three or more.')
@@ -85,10 +85,11 @@ class Guild(commands.Cog):
         data = await guild_get_tag(guild_id=ctx.guild.id, tag=tag)
         if data and data['item']:
             info = data['item'][0]
+            time = discord.utils.format_dt(info['created_at'], style='f')
             em = discord.Embed(title=info['name'], colour=0xffffff)
             em.add_field(name='Content', value=info['content'], inline=False)
             em.add_field(name='Owner', value='<@' + info['owner'] + '>', inline=True)
-            em.add_field(name='Created at', value=info['created_at'], inline=True)
+            em.add_field(name='Created at', value=time, inline=True)
             await ctx.send(embed=em)
         else:
             await ctx.send('Tag not found.')
