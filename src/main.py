@@ -7,7 +7,6 @@ from discord.ext import commands
 
 intent = discord.Intents.default()
 intent.members = True
-intent.messages = True
 intent.message_content = True
 
 # Prefix
