@@ -96,17 +96,19 @@ class Guild(commands.Cog):
 
     @tag.command(name='all')
     async def tag_all(self, ctx):
+        msg = await ctx.send('Fetching tags...')
         tags = ''
         for user in ctx.guild.members:
             data = await guild_fetch_user(guild_id=ctx.guild.id, owner=f'{user.id}')
             if data.items:
                 for item in data.items:
                     tags+=' ' + item['name'] + ' (ID: ' + item['key'] + ')' + '\n'
+                    await msg.edit(f'Chunked **{data.count}** item(s) continuing to fetch...')
             else:
                 pass
         em = discord.Embed(description=tags, colour=0xffffff)
         em.set_author(name='Guild Tag(s)', icon_url=ctx.guild.icon.url)
-        await ctx.send(embed=em)
+        await msg.edit(embed=em)
 
     @commands.command(name='tags')
     async def user_tags(self, ctx, user: discord.User=None):
