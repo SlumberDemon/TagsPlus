@@ -21,6 +21,13 @@ class Test(commands.Cog):
         await ctx.send(data.items)
 
     @commands.command(name='test3')
+    async def dataname(self, ctx, tag):
+        data = await guild_get_tag(guild_id=ctx.guild.id, tag=tag)
+        await ctx.send(data['name'])
+        await ctx.send(data['owner'])
+        await ctx.send(data['key'])
+
+    @commands.command(name='test4')
     async def datacontent(self, ctx, tag):
         data = await guild_get_tag(guild_id=ctx.guild.id, tag=tag)
         await ctx.send(data['item'][0]['content'])
