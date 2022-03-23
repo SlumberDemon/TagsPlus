@@ -37,7 +37,7 @@ class Test(commands.Cog):
         time = datetime.datetime.utcnow()
         owner = f'{ctx.author.id}'
         tag_name = name.replace(' ', '_')
-        await guild_create_tag(guild_id=ctx.guild.id, item=[{"owner": owner, "name": tag_name, "content": content, "created_at": f'{time.day}/{time.month}/{time.year}'}], owner=owner, name=tag_name)
+        await guild_create_tag(guild_id=ctx.guild.id, item=[{"owner": owner, "name": tag_name, "content": content, "created_at": time}], owner=owner, name=tag_name)
         await ctx.send(f'Tag `{name}` successfully created.')
 
     @commands.command(name='test7')
