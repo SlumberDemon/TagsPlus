@@ -11,9 +11,8 @@ deta = Deta(os.getenv('DETA'))
 
 async def guild_create_tag(guild_id: int, item: Union[list, dict], owner: str, name: str):
     db = deta.Base(f'Guild-{guild_id}')
-    data = db.fetch({'name': name})
     check = await guild_get_tag(guild_id=guild_id, tag=name)
-    if check['item'][0]['name'] == name:
+    if check['name'] == name:
         print('Test message')
     else:
         print('Test message 1')
