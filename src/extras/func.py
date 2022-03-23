@@ -8,12 +8,14 @@ deta = Deta(os.getenv('DETA'))
 
 
 async def guild_create_tag(guild_id: int, item: Union[list, dict], owner: str, name: str):
+    print('Test message 1')
     db = deta.Base(f'Guild-{guild_id}')
     check = await guild_get_tag(guild_id=guild_id, tag=name)
+    print('Test message 2')
     if check['name'] == str(name):
-        print('Test message')
+        print('Test message 3')
     else:
-        print('Test message 1')
+        print('Test message 4')
         db.insert({'item': item, 'owner': owner, 'name': name})
 
 
