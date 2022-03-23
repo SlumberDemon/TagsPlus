@@ -38,10 +38,10 @@ class Guild(commands.Cog):
         if data and data['item']:
             owner = data['item'][0]['owner']
             if f'{ctx.author.id}' == f'{owner}':
-                time = datetime.datetime.now()
+                time = datetime.datetime.utcnow()
                 await guild_edit_tag(guild_id=ctx.guild.id, item=[
                     {"owner": f'{ctx.author.id}', "name": name, "content": content,
-                     "created_at": f'{time.day}/{time.month}/{time.year}'}], key=name)
+                     "created_at": time}], key=name)
                 await ctx.send(f'Tag `{name}` successfully edited.')
             else:
                 await ctx.send('You don\'t own this tag.', view=None)
@@ -89,7 +89,7 @@ class Guild(commands.Cog):
             em = discord.Embed(title=info['name'], colour=0xffffff)
             em.add_field(name='Content', value=info['content'], inline=False)
             em.add_field(name='Owner', value='<@' + info['owner'] + '>', inline=True)
-            em.add_field(name='Created at', value=time, inline=True)
+            em.add_field(name='Created at / Last edit', value=time, inline=True)
             await ctx.send(embed=em)
         else:
             await ctx.send('Tag not found.')

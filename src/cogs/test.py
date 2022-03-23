@@ -34,7 +34,7 @@ class Test(commands.Cog):
 
     @commands.command(name='test6')
     async def datacreate(self, ctx, name, *, content: str):
-        time = datetime.datetime.now()
+        time = datetime.datetime.utcnow()
         owner = f'{ctx.author.id}'
         tag_name = name.replace(' ', '_')
         await guild_create_tag(guild_id=ctx.guild.id, item=[{"owner": owner, "name": tag_name, "content": content, "created_at": f'{time.day}/{time.month}/{time.year}'}], owner=owner, name=tag_name)
