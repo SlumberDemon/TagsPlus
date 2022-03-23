@@ -18,11 +18,14 @@ async def guild_create_tag(guild_id: int, item: Union[list, dict], owner: str, n
 #        print('Test message 4')
     db.insert({'item': item, 'owner': owner, 'name': name})
 
-
 async def guild_edit_tag(guild_id: int, item: Union[list, dict], key: str):
     db = deta.Base(f'Guild-{guild_id}')
     db.put({'item': item}, key)
 
+async def guild_delete_tag(guild_id: int, key: str):
+    db = deta.Base(f'Guild-{guild_id}')
+    db.delete(key)
+    
 
 async def guild_get_tag_by_id(guild_id: int, key: str):
     db = deta.Base(f'Guild-{guild_id}')
@@ -31,7 +34,6 @@ async def guild_get_tag_by_id(guild_id: int, key: str):
 async def guild_get_tag_by_name(guild_id: int, name: str):
     db = deta.Base(f'Guild-{guild_id}')
     return db.fetch({'name': name})
-    
 
 async def guild_get_tag(guild_id: int, tag: str):
     try:
@@ -47,10 +49,6 @@ async def guild_get_tag(guild_id: int, tag: str):
     except:
         pass
 
-
-async def guild_delete_tag(guild_id: int, key: str):
-    db = deta.Base(f'Guild-{guild_id}')
-    db.delete(key)
 
 async def guild_fetch_user(guild_id: int, owner: str):
     db = deta.Base(f'Guild-{guild_id}')
