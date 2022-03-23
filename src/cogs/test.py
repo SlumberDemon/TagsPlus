@@ -33,5 +33,12 @@ class Test(commands.Cog):
         await guild_create_tag(guild_id=ctx.guild.id, item=[{"owner": owner, "name": tag_name, "content": content, "created_at": f'{time.day}/{time.month}/{time.year}'}], owner=owner, name=tag_name)
         await ctx.send(f'Tag `{name}` successfully created.')
 
+    @commands.command(name='test5')
+    async def datacreatesingle(self, ctx, name, *, content: str):
+        owner = f'{ctx.author.id}'
+        tag_name = name.replace(' ', '_')
+        await guild_create_tag(guild_id=ctx.guild.id, item=['Item'], owner=owner, name=tag_name)
+        await ctx.send(f'Tag `{name}` successfully created.')
+
 async def setup(bot):
     await bot.add_cog(Test(bot))
