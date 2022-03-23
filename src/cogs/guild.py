@@ -72,7 +72,7 @@ class Guild(commands.Cog):
     @tag.command(name='raw')
     async def tag_raw(self, ctx, tag):
         data = await guild_get_tag(guild_id=ctx.guild.id, tag=tag)
-        if tag:
+        if data:
             first_step = discord.utils.escape_markdown(tag['item'][0]['content'])
             data = (first_step.replace('<', '\\<'))
             embed = discord.Embed(description=f'\n{data}', colour=0xffffff)
