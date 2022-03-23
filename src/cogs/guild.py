@@ -83,7 +83,7 @@ class Guild(commands.Cog):
     @tag.command(name='info')
     async def tag_info(self, ctx, tag):
         data = await guild_get_tag(guild_id=ctx.guild.id, tag=tag)
-        if data and data['item']:
+        if data:
             info = data['item'][0]
             time = discord.utils.format_dt(info['created_at'], style='f')
             em = discord.Embed(title=info['name'], colour=0xffffff)
