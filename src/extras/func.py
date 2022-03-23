@@ -1,6 +1,4 @@
-from http.client import EXPECTATION_FAILED
 import os
-from tabnanny import check
 from deta import Deta
 from typing import Union
 
