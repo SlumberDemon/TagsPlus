@@ -11,17 +11,17 @@ class Test(commands.Cog):
         self.bot = bot
 
     @commands.command(name='test1')
-    async def test(self, ctx, tag):
+    async def nodata(self, ctx, tag):
         data = await guild_get_tag(guild_id=ctx.guild.id, tag=tag)
         await ctx.send(data)
 
     @commands.command(name='test2')
-    async def test(self, ctx, tag):
+    async def itemdata(self, ctx, tag):
         data = await guild_get_tag(guild_id=ctx.guild.id, tag=tag)
         await ctx.send(data.items)
 
     @commands.command(name='test3')
-    async def test(self, ctx, tag):
+    async def datacontent(self, ctx, tag):
         data = await guild_get_tag(guild_id=ctx.guild.id, tag=tag)
         await ctx.send(data['item'][0]['content'])
 
