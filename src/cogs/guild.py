@@ -14,7 +14,7 @@ class Guild(commands.Cog):
     async def tag(self, ctx, tag):
         data = await guild_get_tag(guild_id=ctx.guild.id, tag=tag)
         if data:
-            await ctx.send(str(data['item'][0]['content']))
+            await ctx.send(int(data['item'][0]['content']))
         else:
             await ctx.send('Tag not found.')
 
