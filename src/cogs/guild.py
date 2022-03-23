@@ -108,7 +108,7 @@ class Guild(commands.Cog):
                 pass
         em = discord.Embed(description=tags, colour=0xffffff)
         em.set_author(name='Guild Tag(s)', icon_url=ctx.guild.icon.url)
-        await msg.edit(embed=em)
+        await msg.edit(content=None, embed=em)
 
     @commands.command(name='tags')
     async def user_tags(self, ctx, user: discord.User=None):
