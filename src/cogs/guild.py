@@ -85,7 +85,7 @@ class Guild(commands.Cog):
         data = await guild_get_tag(guild_id=ctx.guild.id, tag=tag)
         if data:
             info = data['item'][0]
-            time = discord.utils.format_dt(datetime.fromisoformat(info['created_at']), style='f')
+            time = discord.utils.format_dt(datetime.datetime.fromisoformat(info['created_at']), style='f')
             em = discord.Embed(title=info['name'], colour=0xffffff)
             em.add_field(name='Content', value=info['content'], inline=False)
             em.add_field(name='Owner', value='<@' + info['owner'] + '>', inline=True)
