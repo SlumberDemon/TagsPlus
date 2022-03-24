@@ -52,7 +52,7 @@ class Guild(commands.Cog):
     async def tag_delete(self, ctx, tag):
         data = await guild_get_tag(guild_id=ctx.guild.id, tag=tag)
         if data:
-            owner = data['item'][0]['owner']
+            owner = data['owner']
             view = Confirm(ctx)
             msg = await ctx.send(f'Want to delete `{tag}` tag?', view=view)
             await view.wait()
