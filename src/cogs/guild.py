@@ -103,7 +103,7 @@ class Guild(commands.Cog):
             if data.items:
                 for item in data.items:
                     tags+=' ' + item['name'] + ' (ID: ' + item['key'] + ')' + '\n'
-                    await msg.edit(f'Chunked **{data.count}** item(s) continuing to fetch...')
+                    await msg.edit(f'Chunking **{data.count}** item(s) continuing to fetch...')
             else:
                 pass
         em = discord.Embed(description=tags, colour=0xffffff)
