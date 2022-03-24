@@ -60,7 +60,7 @@ class Guild(commands.Cog):
                 await msg.edit('Tag deletion timed out.')
             elif view.value:
                 if f'{ctx.author.id}' == f'{owner}':
-                    await guild_delete_tag(guild_id=ctx.guild.id, key=tag)
+                    await guild_delete_tag(guild_id=ctx.guild.id, key=data['key'])
                     await msg.edit(f'Tag `{data["name"]}` successfully deleted.', view=None)
                 else:
                     await msg.edit('You don\'t own this tag.', view=None)
