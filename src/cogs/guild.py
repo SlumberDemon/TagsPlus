@@ -72,9 +72,9 @@ class Guild(commands.Cog):
     async def tag_raw(self, ctx, tag):
         data = await guild_get_tag(guild_id=ctx.guild.id, tag=tag)
         if data:
-            first_step = discord.utils.escape_markdown(int(data['item'][0]['content']))
+            first_step = discord.utils.escape_markdown(data['item'][0]['content'])
             text = (first_step.replace('<', '\\<'))
-            embed = discord.Embed(description=f'\n{text}', colour=0xffffff)
+            embed = discord.Embed(description=f'{text}', colour=0xffffff)
             await ctx.send(embed=embed)
         else:
             await ctx.send('Tag not found.')
