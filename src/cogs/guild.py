@@ -25,7 +25,7 @@ class Guild(commands.Cog):
                 time = datetime.datetime.utcnow()
                 owner = f'{ctx.author.id}'
                 tag_name = name.replace(' ', '_')
-                await guild_create_tag(guild_id=ctx.guild.id, item=[{"owner": owner, "name": tag_name, "content": content, "created_at": time}], owner=owner, name=tag_name)
+                await guild_create_tag(guild_id=ctx.guild.id, item=[{"owner": owner, "name": tag_name, "content": content, "created_at": str(time)}], owner=owner, name=tag_name)
                 await ctx.send(f'Tag `{name}` successfully created.')
             else:
                 await ctx.send('To `little` characters, please use three or more.')
@@ -35,7 +35,7 @@ class Guild(commands.Cog):
     @tag.command(name='edit')
     async def edit(self, ctx, name, *, content: str):
         data = await guild_get_tag(guild_id=ctx.guild.id, tag=name)
-        if data and data['item']:
+        if data:
             owner = data['item'][0]['owner']
             if f'{ctx.author.id}' == f'{owner}':
                 time = datetime.datetime.utcnow()
@@ -51,7 +51,7 @@ class Guild(commands.Cog):
     @tag.command(name='delete')
     async def tag_delete(self, ctx, tag):
         data = await guild_get_tag(guild_id=ctx.guild.id, tag=tag)
-        if data and data['item']:
+        if data:
             owner = data['item'][0]['owner']
             view = Confirm(ctx)
             msg = await ctx.send(f'Want to delete `{tag}` tag?', view=view)
