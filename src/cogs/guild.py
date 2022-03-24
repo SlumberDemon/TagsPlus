@@ -72,8 +72,8 @@ class Guild(commands.Cog):
     async def tag_raw(self, ctx, tag):
         data = await guild_get_tag(guild_id=ctx.guild.id, tag=tag)
         if data:
-            first_step = discord.utils.escape_markdown(data['item'][0]['content'])
-            text = (first_step.replace('<', '\\<'))
+            new = discord.utils.escape_markdown(data['item'][0]['content'])
+            text = (new.replace('<', '\\<'))
             embed = discord.Embed(description=f'{text}', colour=0xffffff)
             await ctx.send(embed=embed)
         else:
@@ -83,7 +83,9 @@ class Guild(commands.Cog):
     async def tag_data(self, ctx, tag):
         data = await guild_get_tag(guild_id=ctx.guild.id, tag=tag)
         if data:
-            embed = discord.Embed(description=f'{data}', colour=0xffffff)
+            new = discord.utils.escape_markdown(data)
+            text = (new.replace('<', '\\<'))
+            embed = discord.Embed(description=f'{text}', colour=0xffffff)
             await ctx.send(embed=embed)
         else:
             await ctx.send('Tag not found.')
