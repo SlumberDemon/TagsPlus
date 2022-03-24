@@ -24,7 +24,7 @@ class Guild(commands.Cog):
             if 0 < len(name) >= 3:
                 time = datetime.datetime.utcnow()
                 owner = f'{ctx.author.id}'
-                await guild_create_tag(guild_id=ctx.guild.id, item=[{"owner": owner, "name": name, "content": content, "created_at": str(time)}], owner=owner, name=tag_name)
+                await guild_create_tag(guild_id=ctx.guild.id, item=[{"owner": owner, "name": name, "content": content, "created_at": str(time)}], owner=owner, name=name)
                 await ctx.send(f'Tag `{name}` successfully created.')
             else:
                 await ctx.send('To `little` characters, please use three or more.')

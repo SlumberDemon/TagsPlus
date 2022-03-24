@@ -36,7 +36,7 @@ class Test(commands.Cog):
     async def datacreate(self, ctx, name, *, content: str):
         time = datetime.datetime.utcnow()
         owner = f'{ctx.author.id}'
-        await guild_create_tag(guild_id=ctx.guild.id, item=[{"owner": owner, "name": name, "content": content, "created_at": str(time)}], owner=owner, name=tag_name)
+        await guild_create_tag(guild_id=ctx.guild.id, item=[{"owner": owner, "name": name, "content": content, "created_at": str(time)}], owner=owner, name=name)
         await ctx.send(f'Tag `{name}` successfully created.')
 
     @commands.command(name='test7')
