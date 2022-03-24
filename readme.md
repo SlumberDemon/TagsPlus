@@ -8,6 +8,7 @@ the global tags)!
 - [ ] Re-write storing and laoding of tags
 - [ ] Fix creating tags with the same name
 - [ ] Update Global tags to use a similar system like the guild tags
+- [ ] Update Help command (maybe with embeds)
 
 ## Other projects from the creators
 
