@@ -79,6 +79,15 @@ class Guild(commands.Cog):
         else:
             await ctx.send('Tag not found.')
 
+    @tag.command(name='data')
+    async def tag_data(self, ctx, tag):
+        data = await guild_get_tag(guild_id=ctx.guild.id, tag=tag)
+        if data:
+            embed = discord.Embed(description=f'{data}', colour=0xffffff)
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send('Tag not found.')
+
     @tag.command(name='info')
     async def tag_info(self, ctx, tag):
         data = await guild_get_tag(guild_id=ctx.guild.id, tag=tag)
