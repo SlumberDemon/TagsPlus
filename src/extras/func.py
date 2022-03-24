@@ -18,9 +18,9 @@ async def guild_create_tag(guild_id: int, item: Union[list, dict], owner: str, n
 #        print('Test message 4')
     db.insert({'item': item, 'owner': owner, 'name': name})
 
-async def guild_edit_tag(guild_id: int, item: Union[list, dict], key: str):
+async def guild_edit_tag(guild_id: int, item: Union[list, dict], owner: str, name: str):
     db = deta.Base(f'Guild-{guild_id}')
-    db.put({'item': item}, key)
+    db.put({'item': item, 'owner': owner, 'name': name})
 
 async def guild_delete_tag(guild_id: int, key: str):
     db = deta.Base(f'Guild-{guild_id}')

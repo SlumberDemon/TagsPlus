@@ -38,9 +38,7 @@ class Guild(commands.Cog):
             owner = data['item'][0]['owner']
             if f'{ctx.author.id}' == f'{owner}':
                 time = datetime.datetime.utcnow()
-                await guild_edit_tag(guild_id=ctx.guild.id, item=[
-                    {"owner": f'{ctx.author.id}', "name": name, "content": content,
-                     "created_at": str(time)}], key=name)
+                await guild_edit_tag(guild_id=ctx.guild.id, item=[{"owner": owner, "name": name, "content": content, "created_at": str(time)}], owner=owner, name=name)
                 await ctx.send(f'Tag `{name}` successfully edited.')
             else:
                 await ctx.send('You don\'t own this tag.', view=None)
