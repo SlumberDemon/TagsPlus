@@ -41,7 +41,7 @@ class Guild(commands.Cog):
                 time = datetime.datetime.utcnow()
                 await guild_edit_tag(guild_id=ctx.guild.id, item=[
                     {"owner": f'{ctx.author.id}', "name": name, "content": content,
-                     "created_at": time}], key=name)
+                     "created_at": str(time)}], key=name)
                 await ctx.send(f'Tag `{name}` successfully edited.')
             else:
                 await ctx.send('You don\'t own this tag.', view=None)
@@ -73,9 +73,9 @@ class Guild(commands.Cog):
     async def tag_raw(self, ctx, tag):
         data = await guild_get_tag(guild_id=ctx.guild.id, tag=tag)
         if data:
-            first_step = discord.utils.escape_markdown(tag['item'][0]['content'])
-            data = (first_step.replace('<', '\\<'))
-            embed = discord.Embed(description=f'\n{data}', colour=0xffffff)
+            first_step = discord.utils.escape_markdown(data['item'][0]['content'])
+            text = (first_step.replace('<', '\\<'))
+            embed = discord.Embed(description=f'\n{text}', colour=0xffffff)
             await ctx.send(embed=embed)
         else:
             await ctx.send('Tag not found.')
