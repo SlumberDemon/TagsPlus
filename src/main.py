@@ -20,7 +20,7 @@ class TagHelp(commands.MinimalHelpCommand):
     async def send_pages(self):
         destination = self.get_destination()
         for page in self.paginator.pages:
-            emby = discord.Embed(description=page)
+            emby = discord.Embed(description=page, colour=0xffffff)
             await destination.send(embed=emby)
 
 # Setup
