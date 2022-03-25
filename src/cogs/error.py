@@ -14,5 +14,5 @@ class Error(commands.Cog):
                 delete_after=5, 
             )
     
-def setup(bot):
-    bot.add_cog(Error(bot))
+async def setup(bot):
+    await bot.add_cog(Error(bot))
