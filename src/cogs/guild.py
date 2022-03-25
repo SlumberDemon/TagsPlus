@@ -20,7 +20,7 @@ class Guild(commands.Cog):
             await ctx.send('Tag not found.')
 
     @tag.command(name='create')
-    async def tag_create(self, ctx, name, *, content: str):
+    async def tag_create(self, ctx, name, *, content: str=None):
         try:
             check = await guild_get_tag(guild_id=ctx.guild.id, tag=name)
             if check['name'] == name:
@@ -30,10 +30,13 @@ class Guild(commands.Cog):
             elif 0 < len(name) >= 3:
                 await ctx.send('To `little` characters, please use three or more.')
         except:
-            time = datetime.datetime.utcnow()
-            owner = f'{ctx.author.id}'
-            await guild_create_tag(guild_id=ctx.guild.id, item=[{"owner": owner, "name": name, "content": content, "created_at": str(time)}], owner=owner, name=name)
-            await ctx.send(f'Tag `{name}` successfully created.')
+            if content == None:
+                await ctx.send('Missing tag content.')
+            else:
+                time = datetime.datetime.utcnow()
+                owner = f'{ctx.author.id}'
+                await guild_create_tag(guild_id=ctx.guild.id, item=[{"owner": owner, "name": name, "content": content, "created_at": str(time)}], owner=owner, name=name)
+                await ctx.send(f'Tag `{name}` successfully created.')
 
     @tag.command(name='edit')
     async def edit(self, ctx, name, *, content: str):
