@@ -5,8 +5,8 @@ the global tags)!
 
 ## Todo
 - [ ] Re-add slash commands
-- [ ] Re-write storing and laoding of tags
-- [ ] Fix creating tags with the same name
+- [x] Re-write storing and laoding of tags
+- [x] Fix creating tags with the same name
 - [ ] Update Global tags to use a similar system like the guild tags
 - [ ] Update Help command (maybe with embeds)
 
