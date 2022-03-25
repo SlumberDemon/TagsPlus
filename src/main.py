@@ -14,6 +14,15 @@ intent.message_content = True
 async def custom_prefix(bot, msg):
     return commands.when_mentioned_or('+')(bot, msg)
 
+# Help
+
+class TagHelp(commands.MinimalHelpCommand):
+    async def send_pages(self):
+        destination = self.get_destination()
+        for page in self.paginator.pages:
+            emby = discord.Embed(description=page)
+            await destination.send(embed=emby)
+
 # Setup
 
 class Tags(commands.Bot):
@@ -21,7 +30,7 @@ class Tags(commands.Bot):
     __dirs__ = os.listdir('src/cogs')
 
     def __init__(self):
-        super().__init__(intents=intent, command_prefix=custom_prefix)
+        super().__init__(intents=intent, command_prefix=custom_prefix, help_command=TagHelp)
         self.init_ext = ['cogs.' + file[:-3] for file in self.__dirs__ if file.endswith('.py')]
 
     async def on_ready(self):
