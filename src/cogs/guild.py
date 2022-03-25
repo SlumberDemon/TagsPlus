@@ -24,17 +24,16 @@ class Guild(commands.Cog):
         check = await guild_get_tag(guild_id=ctx.guild.id, tag=name)
         if check['name'] == name:
             await ctx.send('This tag already exists.')
+        elif check['key'] == name:
+            await ctx.send('Tags cannot use another tags ID as name.')
         else:
-            if check['key'] == name:
-                await ctx.send('Tags cannot use another tags ID as name.')
+            if 0 < len(name) >= 3:
+                time = datetime.datetime.utcnow()
+                owner = f'{ctx.author.id}'
+                await guild_create_tag(guild_id=ctx.guild.id, item=[{"owner": owner, "name": name, "content": content, "created_at": str(time)}], owner=owner, name=name)
+                await ctx.send(f'Tag `{name}` successfully created.')
             else:
-                if 0 < len(name) >= 3:
-                    time = datetime.datetime.utcnow()
-                    owner = f'{ctx.author.id}'
-                    await guild_create_tag(guild_id=ctx.guild.id, item=[{"owner": owner, "name": name, "content": content, "created_at": str(time)}], owner=owner, name=name)
-                    await ctx.send(f'Tag `{name}` successfully created.')
-                else:
-                    await ctx.send('To `little` characters, please use three or more.')
+                await ctx.send('To `little` characters, please use three or more.')
 
     @tag.command(name='edit')
     async def edit(self, ctx, name, *, content: str):
