@@ -1,3 +1,4 @@
+from tabnanny import check
 import discord
 import datetime
 from discord.ext import commands
@@ -20,7 +21,10 @@ class Guild(commands.Cog):
 
     @tag.command(name='create')
     async def tag_create(self, ctx, name, *, content: str):
-        try:
+        check = await guild_get_tag(guild_id=ctx.guild.id, tag=name)
+        if check['name'] == name:
+            await ctx.send('This tag already exists or you are using a tag ID as a name.')
+        else:
             if 0 < len(name) >= 3:
                 time = datetime.datetime.utcnow()
                 owner = f'{ctx.author.id}'
@@ -28,8 +32,6 @@ class Guild(commands.Cog):
                 await ctx.send(f'Tag `{name}` successfully created.')
             else:
                 await ctx.send('To `little` characters, please use three or more.')
-        except Exception:
-            await ctx.send('This tag already exists or you are using a tag ID as a name.')
 
     @tag.command(name='edit')
     async def edit(self, ctx, name, *, content: str):
