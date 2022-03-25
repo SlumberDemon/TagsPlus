@@ -21,7 +21,10 @@ class Guild(commands.Cog):
 
     @tag.command(name='create')
     async def tag_create(self, ctx, name, *, content: str):
-        check = await guild_get_tag(guild_id=ctx.guild.id, tag=name)
+        try:
+            check = await guild_get_tag(guild_id=ctx.guild.id, tag=name)
+        except:
+            check = None
         if check['name'] == name:
             await ctx.send('This tag already exists.')
         elif check['key'] == name:
