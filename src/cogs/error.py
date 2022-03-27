@@ -13,6 +13,8 @@ class Error(commands.Cog):
                 'Please try again with the `required` argument(s).',
                 delete_after=5, 
             )
+        else:
+            raise error
     
 async def setup(bot):
     await bot.add_cog(Error(bot))
